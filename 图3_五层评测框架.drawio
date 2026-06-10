@@ -1,0 +1,77 @@
+<mxfile host="app.diagrams.net" agent="kiro" version="24.0.0">
+  <diagram id="tcm-llm-5layer" name="五层评测框架">
+    <mxGraphModel dx="900" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="中医药知识驱动的五层评测框架" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="20" width="400" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="hdrLayer" value="层级" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="170" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="hdrFocus" value="评测重点" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="80" width="300" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="hdrBench" value="对应基准类别" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="80" width="220" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="L1" value="知识层" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="130" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L1f" value="中医理论、术语与中药知识&#10;（准确率、术语规范率）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="250" y="130" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L1b" value="考试类" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="550" y="130" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L2" value="辨证层" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="220" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L2f" value="四诊信息到证候、病机推断&#10;（辨证准确率、推理思路评分）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="250" y="220" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L2b" value="辨证推理类" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="550" y="220" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L3" value="治则层" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="310" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L3f" value="依证立法的合理性&#10;（治法推荐准确率、合理性评分）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="250" y="310" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L3b" value="辨证推理类（待加强）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="550" y="310" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L4" value="方药层" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L4f" value="处方、配伍、剂量与禁忌&#10;（方剂适配度、禁忌识别召回率）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="250" y="400" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L4b" value="安全/处方类" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="550" y="400" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L5" value="疗效层（目标层）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;fontStyle=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="490" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L5f" value="随访结局与复诊调方&#10;（结局预测、加减合理性）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2e6;strokeColor=#d79b00;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="490" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="L5b" value="真实世界类（待建设）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2e6;strokeColor=#d79b00;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="490" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="endArrow=classic;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="L1" target="L2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="endArrow=classic;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="L2" target="L3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="endArrow=classic;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="L3" target="L4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;" edge="1" parent="1" source="L4" target="L5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="note" value="逐层递进、下层为上层前提；采用条件化评分并设各层准入阈值" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="80" y="575" width="690" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cond" value="条件依赖：辨证错误使其后治则/方药评测失去意义，误差沿链条传导放大" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="80" y="605" width="690" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

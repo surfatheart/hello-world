@@ -1,0 +1,50 @@
+<mxfile host="app.diagrams.net" agent="kiro" version="24.0.0">
+  <diagram id="evolution-path" name="评测体系演化路径">
+    <mxGraphModel dx="900" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="中医药大语言模型评测体系演化路径" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="20" width="420" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" value="考试评测" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" value="知识评测" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="120" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="推理评测" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="120" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" value="多模态评测" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="120" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" value="真实世界评测" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;fontStyle=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="120" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" value="标准化考试、教材题&#10;事实性知识记忆" style="text;html=1;align=center;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="55" y="200" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" value="术语、中药知识&#10;基础能力问答" style="text;html=1;align=center;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="265" y="200" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="辨证思维、病机推断&#10;动态交互诊断" style="text;html=1;align=center;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="475" y="200" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="舌象、脉象、四诊合参&#10;跨模态融合" style="text;html=1;align=center;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="685" y="200" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="患者结局为终点&#10;前瞻性临床验证（待建设）" style="text;html=1;align=center;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="895" y="200" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" style="endArrow=classic;html=1;strokeWidth=2;" edge="1" parent="1" source="s1" target="s2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a2" style="endArrow=classic;html=1;strokeWidth=2;" edge="1" parent="1" source="s2" target="s3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a3" style="endArrow=classic;html=1;strokeWidth=2;" edge="1" parent="1" source="s3" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a4" style="endArrow=classic;html=1;strokeWidth=2;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="s4" target="s5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="axis" value="由浅入深 ｜ 由单模态到多模态 ｜ 由静态到动态" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="330" y="280" width="450" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
