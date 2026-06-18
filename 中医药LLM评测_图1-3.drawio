@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" version="24.0.0">
+  <diagram id="fig1_prisma" name="图1 PRISMA">
+    <mxGraphModel dx="900" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="t" value="图1 文献检索与筛选流程（PRISMA）" style="text;html=1;fontSize=15;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="120" y="20" width="500" height="30" as="geometry"/></mxCell>
+        <mxCell id="b1" value="通过数据库检索获得记录 276 篇&#10;（WoS 125；PubMed 85；CNKI 57；万方 9）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1"><mxGeometry x="120" y="70" width="320" height="60" as="geometry"/></mxCell>
+        <mxCell id="b2" value="去重后记录 233 篇" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1"><mxGeometry x="120" y="180" width="320" height="50" as="geometry"/></mxCell>
+        <mxCell id="b3" value="标题与摘要筛选 233 篇" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1"><mxGeometry x="120" y="280" width="320" height="50" as="geometry"/></mxCell>
+        <mxCell id="b4" value="全文评估 62 篇" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1"><mxGeometry x="120" y="380" width="320" height="50" as="geometry"/></mxCell>
+        <mxCell id="b5" value="纳入定性综述的研究 34 篇" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="120" y="480" width="320" height="50" as="geometry"/></mxCell>
+        <mxCell id="r0" value="剔除重复 43 篇" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1"><mxGeometry x="540" y="175" width="240" height="40" as="geometry"/></mxCell>
+        <mxCell id="r1" value="排除 171 篇&#10;（中药药理、临床疗效试验、机器翻译等主题不符）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1"><mxGeometry x="540" y="270" width="240" height="60" as="geometry"/></mxCell>
+        <mxCell id="r2" value="排除 28 篇&#10;（无评测内容、数据不全或重复发表）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1"><mxGeometry x="540" y="375" width="240" height="60" as="geometry"/></mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="b1" target="b2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="b2" target="b3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="b3" target="b4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="b4" target="b5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="x0" style="html=1;endArrow=block;dashed=1;" edge="1" parent="1" source="b1" target="r0"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="x1" style="html=1;endArrow=block;dashed=1;" edge="1" parent="1" source="b3" target="r1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="x2" style="html=1;endArrow=block;dashed=1;" edge="1" parent="1" source="b4" target="r2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="note" value="注：识别端 276 篇及四库分布为实际检索结果；去重(43)、筛除(171)、全文排除(28)等过程计数以实际筛选记录为准。" style="text;html=1;fontSize=10;align=left;fontColor=#666666;" vertex="1" parent="1"><mxGeometry x="120" y="560" width="660" height="40" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="fig2_evo" name="图2 评测体系演化">
+    <mxGraphModel dx="900" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="500" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="t" value="图2 中医药大语言模型评测体系演化路径" style="text;html=1;fontSize=15;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="200" y="20" width="500" height="30" as="geometry"/></mxCell>
+        <mxCell id="c1" value="考试评测" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="40" y="120" width="140" height="60" as="geometry"/></mxCell>
+        <mxCell id="c2" value="知识评测" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="240" y="120" width="140" height="60" as="geometry"/></mxCell>
+        <mxCell id="c3" value="推理评测" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="440" y="120" width="140" height="60" as="geometry"/></mxCell>
+        <mxCell id="c4" value="多模态评测" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="640" y="120" width="140" height="60" as="geometry"/></mxCell>
+        <mxCell id="c5" value="真实世界评测" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="840" y="120" width="150" height="60" as="geometry"/></mxCell>
+        <mxCell id="a1" style="html=1;endArrow=block;" edge="1" parent="1" source="c1" target="c2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a2" style="html=1;endArrow=block;" edge="1" parent="1" source="c2" target="c3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a3" style="html=1;endArrow=block;" edge="1" parent="1" source="c3" target="c4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a4" style="html=1;endArrow=block;" edge="1" parent="1" source="c4" target="c5"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="fig3_framework" name="图3 五层框架">
+    <mxGraphModel dx="900" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="t" value="图3 中医药知识驱动的五层评测框架" style="text;html=1;fontSize=15;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="150" y="20" width="500" height="30" as="geometry"/></mxCell>
+        <mxCell id="l1" value="知识层　中医理论·术语·中药知识" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="160" y="70" width="380" height="55" as="geometry"/></mxCell>
+        <mxCell id="l2" value="辨证层　四诊信息 → 证候/病机" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="160" y="165" width="380" height="55" as="geometry"/></mxCell>
+        <mxCell id="l3" value="治则层　依证立法" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="160" y="260" width="380" height="55" as="geometry"/></mxCell>
+        <mxCell id="l4" value="方药层　处方·配伍·剂量·禁忌" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="160" y="355" width="380" height="55" as="geometry"/></mxCell>
+        <mxCell id="l5" value="疗效层　随访结局·复诊调方（目标层，待真实世界数据支撑）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="160" y="450" width="380" height="55" as="geometry"/></mxCell>
+        <mxCell id="d1" style="html=1;endArrow=block;" edge="1" parent="1" source="l1" target="l2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="d2" style="html=1;endArrow=block;" edge="1" parent="1" source="l2" target="l3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="d3" style="html=1;endArrow=block;" edge="1" parent="1" source="l3" target="l4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="d4" style="html=1;endArrow=block;" edge="1" parent="1" source="l4" target="l5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="dep" value="逐层递进，下层为上层前提；&#10;条件化评分，误差沿链传导" style="text;html=1;align=left;fontSize=11;fontColor=#b85450;" vertex="1" parent="1"><mxGeometry x="560" y="240" width="230" height="60" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
