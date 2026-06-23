@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="tcm-trustworthy-loop" name="图10-3 中医药可信AI安全工程闭环">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="640" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="图10-3　中医药可信AI安全工程闭环" style="text;html=1;align=center;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1000" height="36" as="geometry" />
+        </mxCell>
+
+        <!-- 中心 -->
+        <mxCell id="center" value="中医药AI模型" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="250" width="160" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- 六环节(顺时针, 六边形排列) -->
+        <mxCell id="r1" value="① 数据治理" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="380" y="80" width="160" height="50" as="geometry" /></mxCell>
+        <mxCell id="r2" value="② 领域适配" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="620" y="170" width="160" height="50" as="geometry" /></mxCell>
+        <mxCell id="r3" value="③ 知识约束" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="620" y="370" width="160" height="50" as="geometry" /></mxCell>
+        <mxCell id="r4" value="④ 可信评测" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="380" y="460" width="160" height="50" as="geometry" /></mxCell>
+        <mxCell id="r5" value="⑤ 临床部署" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="140" y="370" width="160" height="50" as="geometry" /></mxCell>
+        <mxCell id="r6" value="⑥ 持续监测" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="140" y="170" width="160" height="50" as="geometry" /></mxCell>
+
+        <!-- 顺时针闭环箭头 -->
+        <mxCell id="a12" value="" style="html=1;endArrow=block;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="r1" target="r2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a23" value="" style="html=1;endArrow=block;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="r2" target="r3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a34" value="" style="html=1;endArrow=block;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="r3" target="r4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a45" value="" style="html=1;endArrow=block;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="r4" target="r5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a56" value="" style="html=1;endArrow=block;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="r5" target="r6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a61" value="" style="html=1;endArrow=block;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="r6" target="r1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 各环节→审计日志(虚线汇聚) -->
+        <mxCell id="audit" value="审计日志" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="880" y="265" width="120" height="80" as="geometry" /></mxCell>
+        <mxCell id="g1" style="html=1;endArrow=open;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="r1" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g2" style="html=1;endArrow=open;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="r2" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g3" style="html=1;endArrow=open;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="r3" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g4" style="html=1;endArrow=open;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="r4" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g5" style="html=1;endArrow=open;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="r5" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="g6" style="html=1;endArrow=open;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="r6" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 审计日志→模型更新与监管报告→反馈中心 -->
+        <mxCell id="fb" value="模型更新与监管报告" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="860" y="420" width="160" height="56" as="geometry" /></mxCell>
+        <mxCell id="af" style="html=1;endArrow=block;strokeWidth=1.5;strokeColor=#d79b00;" edge="1" parent="1" source="audit" target="fb"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="fc" value="反馈/再校准" style="html=1;endArrow=block;strokeWidth=2;dashed=1;strokeColor=#82b366;fontSize=11;" edge="1" parent="1" source="fb" target="center"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="note" value="说明：可信AI不是一次性评测，而是“数据治理→领域适配→知识约束→可信评测→临床部署→持续监测”的持续闭环；各环节统一汇入审计日志，并经模型更新与监管报告反馈到模型。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=left;spacingLeft=10;spacingRight=10;" vertex="1" parent="1"><mxGeometry x="140" y="540" width="640" height="60" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
