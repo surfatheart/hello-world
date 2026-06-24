@@ -1,0 +1,162 @@
+中医药科研前沿季度分析报告（2026年第二季度）
+数据来源：第二季度.xlsx（共765条文献，729条含摘要）。本报告以新颖性为导向，优先呈现具有突破性、代表性或趋势预示意义的研究；对同质化较高的方向择其精华简述。文中方括号[N]为文献角标，对应文末参考文献。
+
+================================================================
+一、核心内容总览
+================================================================
+
+（一）季度研究特征
+
+1. 临床证据迈向"国际顶刊 + 硬终点"
+本季度针灸与中成药研究的显著特征，是临床证据在发表平台与终点层级上的双重抬升。研究不再满足于自评量表式的主观改善，而是转向影像结构、客观生物标志物等"硬终点"：膝骨关节炎电针试验以多中心、假针对照方式评估关节结构性获益[324]，麝香保心丸完成IV期多中心双盲安慰剂对照试验并报告合并肾功能下降人群的亚组结果[675]，益气复脉冻干粉针则以B型利钠肽（BNP）这一客观指标作为急性心衰疗效的判读依据[253]。与此同时，纳入15家医院、1282例的真实世界前瞻队列开始补足随机试验难以覆盖的长期、整合用药场景[469]。这表明中医药临床研究正逐步以现代循证医学的话语体系参与国际对话；更重要的是，这些试验多由国内团队主导、在中国人群中完成，意味着中医药正以"本土证据"而非"舶来验证"的姿态进入高影响力期刊，其示范意义已超出单个病种本身。
+
+2. 研究对象与工具的"双重换代"
+更深层的变化发生在研究对象与工具层面。一方面，中药的"物质基础"认知正从单一的小分子化合物，向植物源小RNA等核酸类信息物质扩展[80]；另一方面，评价工具从高度依赖的计算推断（成分-靶点网络）转向更贴近人体生理的实验系统，如人源诱导多能干细胞（iPSC）肝类器官[673]、转基因荧光斑马鱼[112]与斑马鱼胚胎毒性模型[54]。这类"人源化/活体化"工具直接回应了纯计算预测"只见关联、难证因果"的固有短板，也使中药"多成分协同"的复杂性第一次有了相对可控的实验观测窗口。
+
+3. 安全性与证候的"可测量化"成为新议题
+本季度还浮现出两类强调"可量化"的研究。其一是中药定量安全科学，研究者用基于生理的药代动力学（PBPK）反向剂量学构建从体外到体内的毒性外推框架[55]，并以斑马鱼模型对药食两用植物做定量心脏/发育毒性评估[54]。其二是证候客观化，借助血浆细胞外囊泡DNA的5-羟甲基胞嘧啶（5hmC）表观遗传特征，对"气阴两虚证"进行分子层面的刻画[97]。两者共同把过去依赖经验描述的"毒"与"证"，推向可测量、可重复的方向。
+
+（二）主要进展亮点
+
+1. 顶刊级针灸与中成药循证成果集中产出
+本季度针灸研究实现了发表平台的实质跃升：电针治疗难治性带状疱疹后神经痛的随机假电针对照试验发表于JAMA Neurology[375]；电针治疗膝骨关节炎的多中心试验不仅评估症状，更探查关节结构性获益[324]；针刺对急性无先兆偏头痛的即时镇痛亦获单盲假针对照随机试验验证[171]。中成药与中西医结合方面，麝香保心丸IV期亚组分析[675]、益气复脉注射剂多中心随机试验[253]、中西医结合治疗临界冠脉病变的真实世界队列[469]，以及经皮冠状动脉介入（PCI）术后中成药的网状Meta分析[387]，共同构成了一批高级别、可被国际同行检视的临床证据。
+
+2. 中药源小RNA与天然纳米载体：物质基础的新假说
+本季度出现了可能改写中药"物质基础"认知的早期信号：植物源小RNA（phytosRNA）被提出可经跨物种通讯作用于人体细胞，构成一类全新的活性物质与天然递送系统[80]；从黄芪饮片中筛出能特异性抑制抗血管生成蛋白Kringle 5的microRNA[126]；枸杞源细胞外囊泡样纳米粒可将植物来源的miR167a-5p递送至哺乳动物细胞、调控线粒体动力学[70]。与之呼应，方剂在煎煮中自组装形成的纳米颗粒被发现本身即可重编程巨噬细胞[125]。这类"核酸信息 + 天然纳米载体"的视角，比又一篇通路机制更具突破潜力。
+
+3. 中药定量安全科学与人源模型平台兴起
+研究不再默认"天然即安全"：锦灯笼果与宿萼提取物的发育、心脏毒性在斑马鱼模型中被定量并锁定关键毒性成分[54]，千里光宁的肝毒性以PBPK反向剂量学建立定量预测[55]。与此同时，人源iPSC肝类器官提示五味子乙素经GPX4轴抑制对乙酰氨基酚所致铁死亡[673]，为现有解毒手段之外的中药来源肝保护候选提供了人源证据。
+
+4. 证候客观化与人工智能方法升级
+表观遗传标志物首次用于中医证候的精准刻画[97]，回应了"证候难以测量"的长期质疑；人工智能也从单一体征客观化升级为异质图学习驱动的中药小分子优先级排序[96]，并延伸至中药材种植与质控全链条[64]。
+
+（三）存在的问题与挑战
+
+1. 高质量临床证据仍稀缺，且质量分层明显
+顶刊级原始随机对照试验数量有限，更多研究为系统评价与网状Meta分析。后者结论高度依赖纳入研究的质量，存在把"汇总证据"误读为"高质量证据"的风险[387][617][415]，亟需更多设计严谨、大样本、多中心的原始试验。
+
+2. 机制研究同质化，因果验证与转化不足
+本季度约106篇属网络药理学、分子对接、分子动力学等常规机制研究（约占有效文献的14%），多停留于关联性预测，缺乏人源模型与体内因果验证，向临床实践或新产品的转化路径仍不通畅。
+
+3. 新范式尚处早期，标准化与可重复性待解
+中药源小RNA的跨界调控[80]、证候分子客观化[97]、人源类器官与器官芯片[673]等具有范式潜力的方向仍属个案与试点，缺乏统一标准、规模化样本与跨中心可重复性验证，距离形成可推广的方法学体系尚有距离。
+
+================================================================
+二、最新研究动态
+================================================================
+
+（一）基础研究领域
+本季度基础研究中真正具有新意的，并非数量庞大的通路机制研究，而是几条尚处早期、却可能改变"物质基础"与"研究对象"认知的线索。本节优先呈现这些新信号，对高产但同质的方向仅作精华速览。
+
+1. 中药源小RNA与"跨界调控"：物质基础的新假说
+中药的物质基础长期被默认为小分子化合物，本季度兴起的"植物源小RNA（phytosRNA）"研究则提出了另一种可能：中药材中天然存在的小RNA可经跨物种通讯作用于人体细胞，本身即构成一类全新的活性物质与天然递送系统[80]。佐证性工作包括，从黄芪饮片中筛选并鉴定出可特异性抑制抗血管生成蛋白Kringle 5的多条microRNA[126]，以及将枸杞源细胞外囊泡样纳米粒所载的植物miR167a-5p递送至哺乳动物细胞、调控线粒体动力学与代谢重编程[70]。"跨界调控"一旦被系统证实，将把中药研究的物质基础从"化学成分"拓展到"核酸信息"，是本季度最具想象空间的方向。
+
+2. "同药不同效"获得新解释：植物表观遗传与代谢可塑性
+针对中药标准化长期依赖"化学等价"却仍难保证疗效一致的悖论，有研究提出了一个被长期忽视的"缺失变量"——药用植物并非化学上静止的材料，其表观遗传与代谢可塑性会随产地、环境而动态变化，从而导致"同一味药并不等于同一种药"[27]。这一视角把道地药材、批次差异等老问题，提升到植物表观遗传调控的新层面，为质量一致性难题提供了此前被忽视的解释框架，也提示未来的质控或需纳入表观层面的指标。
+
+3. 从"调节通路"到"重编程细胞命运"
+与"再找到一条通路"不同，本季度更具新意的机制研究转向"重编程"细胞命运与状态。古髻止痛方中自组装的纳米颗粒可重编程滑膜巨噬细胞的M1/M2极化以缓解膝骨关节炎[125]，改良龟鹿二仙胶经miR-146a/STAT1/SOCS1轴重塑T细胞分化、恢复再生障碍性贫血的免疫耐受[187]，清金平喘方则重编程中性粒细胞信号通路以抑制重症肺炎的肺部炎症[206]。尤其值得注意的是，山柰酚通过重塑CD47信号、抑制一种新近被定义的细胞死亡方式"氧死亡（oxeiptosis）"来保护重症急性胰腺炎的腺泡细胞[654]——相较已被研究得相当充分的铁死亡，这类新型死亡模式与免疫细胞重编程才是更具前沿性的靶点。
+
+4. 植物源囊泡与"方剂自组装纳米颗粒"重塑给药范式
+递送研究向"植物源生物载体 + 精准靶向"升级，并出现一个值得关注的新对象——方剂在煎煮过程中自组装形成的纳米颗粒，本身即具备调控细胞的活性[125]。此外，枸杞源囊泡样纳米粒[70]、面向脑部疾病的中药活性成分纳米递送策略[109]、药用植物源纳米囊泡用于皮肤递送[5]、分级结构的植物源中药水凝胶贴片用于创面愈合[110]，共同推动中药制剂从"溶解度增效"迈向"病理机制导向的智能递送"。
+
+5. 合成生物学与分子育种保障稀缺药材"可持续供给"
+资源端研究从田间延伸到基因与细胞工厂。药用植物分子育种取得进展[1]，面向增强生物制造的合成生物学受到关注[3]，发酵（炮制）的精准调控被系统总结[9]，并出现以合成生物学拯救濒危药用兰科、实现活性成分异源生产的探索[50]。同时，抗逆与品质协同的分子机制被解析，如丹参SmGA2ox4基因可同时改善耐盐性与丹参酮积累[14]；逆境转录组[6]与根际菌群-水分调控提升药材产量的农艺策略[11]，共同指向"稳产、稳质"的可持续供给。
+
+6. 中药毒性研究进入"定量、可预测"时代
+安全研究出现方法学跃升：千里光宁的肝毒性经线粒体凋亡机制阐明，并以PBPK反向剂量学建立从体外到体内的定量风险预测框架[55]；锦灯笼提取物的发育与心脏毒性在斑马鱼模型中被定量评估并定位关键毒性成分[54]。毒理学由此从经验性的定性描述，走向剂量—机制—暴露一体化的定量预测。
+
+7. 存量速览：高产但同质的通路机制研究
+需要清醒看到，本季度数量最多的仍是铁死亡、肠道菌群调节与单体/复方的通路机制研究，例如中药靶向铁死亡干预肝癌[100]、脑缺血再灌注损伤[93]，异黄酮经菌群代谢物S-equol改善心衰[38]、黄芩汤调节菌群稳态缓解结肠炎[669]等。这些工作证据扎实、可读性强，但研究范式高度成熟、同质化明显，单篇的增量信息有限，故此处仅作精华提示而不展开。
+
+8. 主要瓶颈与待解问题
+系统生物学海量数据与中医整体性理论的深度融合仍不充分；多数机制结论局限于细胞与动物模型，向临床转化的可靠性有待大规模验证；新兴的小RNA跨界调控、植物表观遗传等假说仍需严格的因果与剂量证据支撑；人源模型虽具前景，但通量、成本与标准化仍需突破。
+
+（二）临床研究领域
+本季度临床研究覆盖神经痛、骨关节、心血管、睡眠与精神、肿瘤早筛及消化系统等专科，整体呈现"终点更硬、设计更严、数据来源更多元"的特点。
+
+1. 针刺研究的终点正在"升级"：从止痛到结构与功能改善
+针刺临床研究的举证标准明显抬高。膝骨关节炎的多中心随机假针对照试验不止评估疼痛与功能评分，更尝试回答"是否带来关节结构性获益"这一更高层级的问题[324]；急性无先兆偏头痛研究聚焦"即时镇痛"这一可被严格设计验证的窗口[171]；耳穴疗法治疗失眠则提供了含随访的随机对照安全性与疗效数据[616]。这一"终点升级"同时对研究设计提出更高要求：需要影像、客观生物标志物等可量化测量以及更长的随访周期，门槛虽高，却也使针刺疗效更易获得国际同行的认可与复核。
+
+2. 中成药大型注册试验与真实世界数据双线推进
+中成药证据呈"注册试验 + 真实世界"双线推进。注册试验端，麝香保心丸在合并估算肾小球滤过率下降的稳定型冠心病人群完成IV期多中心双盲安慰剂对照试验亚组分析[675]，益气复脉冻干粉针以BNP为客观终点完成急性失代偿缺血性心衰的多中心、盲终点试验[253]。真实世界端，纳入15家医院、1282例的多中心前瞻队列比较了中西医结合与单纯西医治疗临界冠脉病变的有效性与安全性[469]，弥补了随机试验在长期、整合场景下的证据缺口。
+
+3. 整合医学在心血管与肿瘤早筛中的证据落点
+中西医结合的临床价值在具体场景中被进一步锚定。心血管领域，PCI术后多种中成药的相对效力经网状Meta分析获得系统比较与排序[387]，为术后二级预防的用药选择提供依据；肿瘤早筛领域，基于中医临床症状联合影像特征构建的肺部磨玻璃结节进展风险模型，体现了"辨证 + 影像"的整合分层思路，指向更精细的早期干预决策[101]。这类模型的意义在于把"辨证"从主观经验转化为可量化、可复核的风险分层依据，从而有望嵌入现有的肺结节早筛随访流程。
+
+4. 网状Meta分析为"非药物疗法"提供横向效力排序
+针对非药物疗法效力不清的现状，多项网状Meta分析给出横向比较：包括非药物干预（含针灸）在2型糖尿病共病抑郁中的相对效力[617]、在物质使用障碍人群焦虑抑郁与生活质量上的效果[415]，以及中草药/天然产物对接受质子泵抑制剂方案患者菌群与临床结局的影响[330]。这类综合为临床决策提供了"谁更优"的排序参考，但结论可靠性仍受纳入研究质量制约。
+
+5. 临床证据的薄弱环节
+研究方法学规范性仍参差，部分研究存在偏倚风险，需要更多严谨的大样本、多中心原始试验；机制发现与辨证论治、方证对应的有机结合尚浅；针灸罕见不良事件与中药潜在相互作用的上市后监测体系有待加强；国际化所需的标准与高水平合作研究仍需推进。
+
+（三）前沿技术与方法学
+本季度方法学呈现"常规计算范式仍占多数、人源模型与AI决策快速崛起"的双线格局。
+
+1. 人工智能：从"看图识证"转向"决策与产业链优化"
+人工智能的应用层级明显上移。在研发决策端，异质图学习（Metapath2vec结合注意力机制）被用于胃癌中药小分子的优先级排序，从简单的"成分—靶点"映射转向更复杂的候选筛选决策[96]；在产业端，AI驱动技术被系统性引入中药材种植与质量控制全链条[64]；在临床端，机器学习与影像、症状特征融合用于肺部磨玻璃结节的风险分层[101]。AI正从"客观化单一体征"扩展为贯穿研发—生产—诊疗的决策工具。
+
+2. 多组学整合：从"通路关联"升级到空间与单细胞分辨
+"成分—靶点—通路—疾病"的多维整合仍是阐释复方机制的核心范式（本季度此类研究约106篇），但其前沿正从"组织匀浆级"的关联，升级到空间分辨与单细胞分辨：空间代谢组学被用于解析生姜泻心汤调节肠-肝轴脂肪酸代谢的机制[292]，单细胞转录组揭示了天麻素改善胆汁淤积性肝纤维化的细胞亚群基础[158]。这类高分辨方法让"中药作用于哪一群细胞、在组织何处发生"成为可回答的问题，也为多组学从"相关性预测"走向"因果性确证"提供了切入点。
+
+3. 网状Meta分析推动疗效证据的标准化排序
+循证方法持续深化，网状Meta分析被用于比较中成药降低PCI术后不良事件的效力谱[387]、非药物干预在精神共病[617]与物质使用障碍[415]中的相对效力，以及中草药对菌群与临床结局的影响[330]，推动疗效评价从"单点验证"走向"横向排序"的标准化。
+
+4. 分析技术走向空间分辨、原位与风险预警
+质量与分析技术向"空间化、原位化、预警化"演进。解吸电喷雾电离质谱成像（DESI-MSI）实现天然药物的原位空间生物分子分析[17]；多技术集成策略用于药食两用植物的真菌毒素风险评估与早期预警[16]；面向产品端，速溶颗粒的风味与溶解度被纳入统一的仪器分析框架[31]。中药质控正从"指纹图谱"迈向"空间与智能感知"，并越来越强调对真菌毒素、重金属等外源性风险的前置预警，而非仅做事后检测。
+
+5. 人源类器官与表观遗传：评价范式的"换基座"
+最具前瞻性的变化是评价基座的更替。人源iPSC肝类器官被用于中药肝保护与抗细胞死亡评价[673]，转基因荧光斑马鱼被用于照亮中药作用"黑箱"[112]，PBPK反向剂量学建立体外到体内的定量毒性预测[55]，基于细胞外囊泡DNA表观遗传标志物的证候精准诊断[97]亦初现端倪。这些工具共同预示着对纯计算范式的逐步补充与替代；若它们能在通量与标准化上取得突破，中医药的药效与安全评价有望摆脱对动物模型与计算预测的单一依赖，建立更接近临床真实、且可跨实验室复现的证据链。
+
+6. 方法学层面的关键制约
+数据异构与术语、标准缺失制约着AI模型的泛化与可靠性；多组学研究的因果推断仍困难、验证不足；人源模型的通量、成本与标准化待解；先进检测与分析技术的成本和操作复杂度，也限制了其在基层与产业一线的推广普及。
+
+================================================================
+参考文献（共46篇）
+================================================================
+[1] Advances in molecular breeding of medicinal plants. Wang, YQ 等. 2026. Molecular Horticulture.
+[3] Editorial: Biofabrication and synthetic biology for enhanced medicinal plant bioproduction. Ahmad, Z 等. 2026. Frontiers In Plant Science.
+[5] Medicinal plant-derived nanovesicles for skin delivery: A natural biovector for therapeutics and cosmetics. Coeurvolan, A 等. 2026. Journal Of Controlled Release.
+[6] Integrated transcriptomic analysis reveals transcriptional changes associated with begomovirus infection in the medicinal plant Emilia sonchifolia. Wang, DD 等. 2026. Frontiers In Plant Science.
+[9] Fermentation of medicinal plant materials: Typical styles, precise controls, and new opportunities for phytomedicine development. Zhao, WY 等. 2026. Industrial Crops And Products.
+[11] Rhizobacteria-induced soil biochemical and hydrological modifications improve medicinal plant productivity under water deficit and elevated CO2. Yan, WH 等. 2026. Agricultural Water Management.
+[14] SmGA2ox4 plays a positive role in improving the salt tolerance and tanshinone accumulation of Salvia miltiorrhiza. Zeng, SJ 等. 2026. Horticulture Research.
+[16] A collaborative strategy of multi-technology integration for mycotoxin risk assessment and early warning in edible and medicinal plants. Fang, L 等. 2026. Phytomedicine.
+[17] DESI-MSI applications for direct (spatial) biomolecular analysis of South African natural medicinal products. Mohlamonyane, KN 等. 2026. Frontiers In Plant Science.
+[27] Why the same herb is not the same medicine: plant epigenetic and metabolic plasticity as a missing variable in Chinese medicine. Hyun, TK. 2026. Chinese Medicine.
+[31] A Comprehensive Instrumental Analysis Framework for Assessing the Dissolvability and Taste Properties of Plant Extract Instant Granules. Ma, X 等. 2026. Foods.
+[38] Reconstitution of gut microbiota by medicinal plant isoflavones ameliorates heart failure with preserved ejection fraction. Lin, JH 等. 2026. Pharmacological Research.
+[50] Synthetic biology as a game-changer for endangered medicinal orchids: biosynthesis, engineering and conservation. Qiu, L 等. 2026. Natural Product Reports.
+[54] Acute developmental toxicity and cardiotoxicity of Physalis alkekengi L. fruit and calyx extracts based on zebrafish (Danio rerio) model. Zhou, ZS 等. 2026. Journal Of Ethnopharmacology.
+[55] Seneciphylline induces hepatotoxicity through mitochondrial apoptosis: mechanistic elucidation and in vitro-to-in vivo prediction via physiologically based pharmacokinetic modeling-facilitated reverse dosimetry. Lu, YS 等. 2026. Chemico-Biological Interactions.
+[64] Empowering Chinese medicinal agriculture through AI-driven technologies: A comprehensive review. Zhang, TT 等. 2026. Artificial Intelligence In Agriculture.
+[70] Engineered bone-targeting Lycium barbarum L.-derived extracellular vesicle-like nanoparticles deliver miR167a-5p to regulate mitochondrial dynamics and metabolic reprogramming in alleviating osteoporosis. Chen, S 等. 2026. Materials Today Bio.
+[80] PhytosRNA therapeutics: Cross-kingdom communication and translational potential of Chinese herbal medicine-derived small RNAs. Hu, K 等. 2026. Plant Cell Reports.
+[93] Progress of Traditional Chinese Medicine in Targeting Ferroptosis to Combat Cerebral Ischemia-Reperfusion Injury. Li, JH 等. 2026. American Journal Of Chinese Medicine.
+[96] Metapath2vec and attention-driven heterogeneous graph learning for prioritizing TCM-derived small molecules in gastric cancer. Sheng, NQ 等. 2026. Chinese Medicine.
+[97] Epigenetic precision diagnostics of traditional Chinese medicine (TCM) syndrome differentiation: a pilot study of atrial fibrillation with qi-yin deficiency syndrome based on 5-hydroxymethylcytosine signatures in extracellular vesicle DNA from plasma. Fan, SW 等. 2026. Chinese Medicine.
+[100] Role of traditional Chinese medicine in ferroptosis of liver cancer: Focus on signaling pathways. Yang, X 等. 2026. Phytomedicine.
+[101] A progression risk assessment model for pulmonary ground-glass nodules based on traditional Chinese medicine clinical symptoms combined with imaging. Maolan, A 等. 2026. Journal Of Integrative Medicine-Jim.
+[109] Nanotechnology for efficient delivery of TCM active ingredients in treating brain diseases. Yang, YT 等. 2026. Materials Today Bio.
+[110] Hierarchical Plant-Derived Chinese Herbal Hydrogel Patches for Wound Healing. Zhu, XY 等. 2026. Advanced Healthcare Materials.
+[112] Illuminating the black box of traditional Chinese medicine: The pivotal role of transgenic fluorescent zebrafish. Yu, HC 等. 2026. Journal Of Ethnopharmacology.
+[125] Nanoparticles isolated from the Gubi Zhitong formula alleviate knee osteoarthritis by reprogramming macrophages. Xi, K 等. 2026. Materials Today Bio.
+[126] Screening and identification of Kringle 5-inhibitory microRNAs from Astragali radix decoction pieces using immobilized magnetic beads. Duan, MJ 等. 2026. International Journal Of Biological Macromolecules.
+[158] Single-cell transcriptomics reveals the ameliorative effect of gastrodin on cholestatic liver fibrosis. Pan, D 等. 2026. Phytomedicine.
+[171] Acupuncture for acute treatment of migraine without aura: A randomized clinical trial. Deng, YZ 等. 2026. Headache.
+[187] Modified Guilu Erxian Glue restores immune tolerance in aplastic anemia by reprogramming T cell differentiation via the miR-146a/STAT1/SOCS1 axis. Zhang, YK 等. 2026. Frontiers In Immunology.
+[206] Qingjin Pingchuan formula attenuates pulmonary inflammation by reprogramming neutrophil SHP1-JAK2/SRC-STAT3 signaling. Zhang, YF 等. 2026. Phytomedicine.
+[253] Effect of Yiqi Fumai lyophilized injection on B-type natriuretic peptide levels in patients with acute decompensated ischemic heart failure: a multicenter, open-label, blinded-outcome, randomized controlled trial. Wang, XL 等. 2026. Phytomedicine.
+[292] Spatial metabolomics reveals the therapeutic mechanisms of Shengjiang Xiexin decoction in modulating gut-liver axis fatty acid metabolism for the treatment of Clostridioides difficile infection. Xu, Y 等. 2026. Journal Of Ethnopharmacology.
+[324] Electroacupuncture for knee osteoarthritis: a multicentre randomised controlled trial assessing symptomatic and structural. Hang, MH 等. 2026. Eclinicalmedicine.
+[330] Effects of Herbal and Natural Product Interventions on Gut Microbiota and Clinical Outcomes in Patients Receiving PPI-Containing Therapy: A Systematic Review and Meta-Analysis. Hwang, JH 等. 2026. Nutrients.
+[375] Effect of Electroacupuncture on Postherpetic Neuralgia A Randomized Clinical Trial. Chen, L 等. 2026. Jama Neurology.
+[387] Comparative efficacy and safety of Chinese patent medicines in coronary heart disease patients after percutaneous coronary intervention: A systematic review and network meta-analysis. Wang, AL 等. 2026. Journal Of Ethnopharmacology.
+[415] Comparative effects of non-pharmacological interventions on anxiety, depression and quality of life in individuals with substance use disorders: A systematic review and network meta-analysis. Luo, HR 等. 2026. Journal Of Affective Disorders.
+[469] Real-world applications of integrated traditional Chinese and Western medicine in patients with intermediate coronary lesions: Insights from a multicenter observational cohort study. Wang, XY 等. 2026. Phytomedicine.
+[616] Efficacy and safety of auriculotherapy for insomnia disorder: A randomized controlled trial. Chen, H 等. 2026. Journal Of Integrative Medicine-Jim.
+[617] Efficacy of non-pharmacological therapies on depression, anxiety, and glycemic control in type 2 diabetes: A systematic review and network meta-analysis. Zheng, MY 等. 2026. General Hospital Psychiatry.
+[654] Kaempferol functionally reprograms CD47 signaling to promote cytoprotection and attenuate oxeiptosis in severe acute pancreatitis. Tian, Yu 等. 2026. Phytomedicine.
+[669] Restoring gut microbiota homeostasis to ameliorate colitis via Huangqin decoction. Pan, Yehua 等. 2026. Phytomedicine.
+[673] Schisandrin B alleviates APAP-induced hepatocyte ferroptosis via the GPX4 axis: Insights from human iPSC-derived hepatic organoids and rat models. Tang, Zhuqian 等. 2026. Phytomedicine.
+[675] Shexiang Baoxin pill in patients with stable coronary artery disease and reduced eGFR: Subgroup analysis of phase IV randomized trial. Zhou, Jingmin 等. 2026. Phytomedicine.
