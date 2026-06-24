@@ -1,0 +1,206 @@
+================================================================
+中医药科研季度情报分析报告（新颖性导向）
+2026年第二季度
+数据来源：第二季度.xlsx（共 765 条文献，729 条含摘要）
+分析方法：参照 tcm_analysis 脚本的"新颖性导向"提示词，
+          主动剔除常规机制研究，聚焦大规模临床证据 / 认知突破 / 趋势预示
+================================================================
+
+一、核心洞察
+
+**临床证据正在向"顶刊 + 硬终点"升级。** 本季度最具分量的不是又一篇网络药理学，
+而是针灸/中成药在国际主流临床期刊上的高质量随机对照证据：电针治疗带状疱疹后神经痛
+登上 JAMA Neurology（假电针对照随机试验）[375]，电针治疗膝骨关节炎在 eClinicalMedicine
+以多中心、假针对照、并首次评估"结构性"终点的方式发表[324]，麝香保心丸（MUSKARDIA）
+拿出 IV 期多中心双盲安慰剂对照试验的亚组证据[675]。这标志中医药临床研究开始用
+"循证医学的语言"与西医同场竞技。
+
+**"自然=安全"的旧认知正被定量毒理学系统性修正。** 多篇研究不再默认中药/药食同源无毒，
+而是用斑马鱼高通量模型与 PBPK 反向剂量学等定量框架重新评估毒性边界[54][55]。
+这是一种健康的"祛魅"，对临床用药与监管都更有价值。
+
+**真正的范式苗头出现在"证候的可测量化"。** 基于血浆细胞外囊泡 DNA 的 5-羟甲基胞嘧啶
+（5hmC）表观遗传特征来做中医证候（房颤气阴两虚证）的精准诊断[97]——这是把最"主观"的
+辨证，第一次尝试落到可量化的分子标志物上，潜在意义类似于 2000 年前后网络药理学、
+2011 年前后真实世界研究的"早期信号"。
+
+**研究工具正从"计算机里的网络"转向"接近人体的模型"。** 人源 iPSC 肝类器官[673]、
+转基因荧光斑马鱼[112]等开始成为中药药效/毒性评价的新平台，预示着对纯网络药理学
+（本季度仍有 106 篇）的逐步替代。
+
+**对决策者的一句话判断：** 本季度的增量价值高度集中在"高质量临床证据 + 证候客观化 +
+人源模型"三条线上；常规机制类研究虽数量庞大（约占七分之一），但同质化严重、边际信息少，
+建议在资源配置与选题上向上述三条线倾斜。
+
+================================================================
+二、亮点研究
+================================================================
+
+（一）大规模与高质量临床证据
+
+本季度针灸类研究实现了发表平台的实质性跃升。电针治疗带状疱疹后神经痛（一种治疗手段
+有限的难治性神经病理性疼痛）以假电针为对照的随机临床试验登上 JAMA Neurology[375]；
+电针治疗膝骨关节炎的多中心随机假针对照试验（上海6家医院）不仅评估症状，还首次探查
+是否带来"结构性获益"，发表于 eClinicalMedicine[324]——后者尤为关键，因为它把针灸
+从"止痛"推向了"是否改善疾病进程"的更高证据层级。急性偏头痛（无先兆）的针刺即时镇痛
+也以单盲、假针对照 RCT（80例）给出验证[171]。耳穴疗法治疗失眠则提供了 RCT 级别的
+疗效与安全性数据[616]。
+
+中成药/中西医结合方面，质量分层明显。高质量端包括：麝香保心丸 IV 期多中心双盲安慰剂
+对照试验在合并 eGFR 下降的稳定型冠心病人群的亚组分析[675]；益气复脉冻干粉针治疗
+急性失代偿缺血性心衰的多中心、开放、盲终点 RCT（以 BNP 为客观终点）[253]；
+以及一项纳入 15 家医院、1282 例的真实世界多中心前瞻队列，比较中西医结合与单纯西医
+治疗"临界冠脉病变"的有效性与安全性[469]——真实世界设计正在填补 RCT 难以覆盖的
+长期、整合用药场景。证据合成端，PCI 术后冠心病人群的中成药网络 Meta 分析[387]、
+PPI 方案患者中草药/天然产物对肠道菌群与临床结局影响的系统评价[330]，以及 2 型糖尿病
+共病抑郁[617]、物质使用障碍[415]中非药物（含针灸）干预的网络 Meta 分析，提供了
+横向比较的相对效力证据。需提醒：网络 Meta 分析结论高度依赖纳入 RCT 的质量，应与
+上述顶刊单项 RCT 区别对待，避免把"汇总"等同于"高质量"。
+
+临床预测模型亦有亮点：基于中医临床症状联合影像构建的肺部磨玻璃结节进展风险评估
+模型[101]，体现了"辨证 + 影像"的整合式风险分层思路。
+
+（二）认知突破与常识颠覆
+
+本季度最值得关注的"祛魅"在毒性认知上。研究者不再默认药用/药食同源植物安全：
+锦灯笼（Physalis alkekengi）果与宿萼提取物在斑马鱼模型中显示发育毒性与心脏毒性，
+并定位关键毒性成分[54]；千里光宁（Seneciphylline，吡咯里西啶生物碱）的肝毒性
+通过线粒体凋亡机制被阐明，并用 PBPK 反向剂量学建立了从体外到体内的定量风险预测框架[55]。
+这类工作把"有没有毒"从经验判断推进到"在什么剂量下、通过什么机制有毒"的定量层面，
+对"天然即安全"的常识是一次重要修正。
+
+针灸研究的认知边界也在被推扩：电针膝骨关节炎试验探查"结构性获益"[324]，
+本质上是在挑战"针灸只能对症、不改变疾病结构进程"的既有看法——无论结论如何，
+这种把举证责任提高到结构终点的做法本身就是认知升级。
+
+证候层面，[97]用表观遗传标志物（EV-DNA 5hmC）刻画"气阴两虚证"，
+直接回应了"中医证候不可测量、缺乏分子基础"的长期质疑。在治疗机制上，
+人源 iPSC 肝类器官提示五味子乙素经 GPX4 轴抑制对乙酰氨基酚（APAP）所致铁死亡[673]，
+为"唯一解毒药 NAC 之外"的中药来源肝保护候选提供了人源模型证据，具有重新定位价值。
+
+（三）趋势预示与新兴方向
+
+可识别出五条具有"早期信号"特征、而非已成熟套路的方向：
+
+1）证候客观化（最具范式潜力）：以表观遗传/细胞外囊泡多组学刻画中医证候[97]，
+   把辨证从主观经验推向可测量生物标志物。若可重复、可推广，可能成为下一个
+   类似网络药理学的方法论拐点。
+
+2）人源化评价平台替代纯计算机推断：iPSC 类器官[673]、转基因荧光斑马鱼[112]、
+   斑马鱼毒理[54]正在成为中药药效与安全评价的新基座，区别于纯网络药理学的
+   "硅基推断"，更贴近人体生理。
+
+3）肠道菌群作为统一机制枢纽与治疗靶点：医用植物异黄酮/S-equol 改善 HFpEF[38]、
+   黄芩汤重塑菌群稳态缓解结肠炎[669]、双氢青蒿素重编程巨噬细胞促 IBD 黏膜愈合[659]、
+   人参经"肠-脑轴"发挥作用[205]，叠加临床层面的菌群 Meta 分析[330]，
+   菌群正从"机制之一"上升为贯穿多病种的"中枢解释变量"。
+
+4）AI 从"网络药理学"升级为"图学习 + 智慧农业"：异质图学习（Metapath2vec + 注意力）
+   用于胃癌中药小分子优先级排序[96]，AI 驱动的中药材农业与质量控制[64]，
+   显示人工智能在中医药的应用正从简单的成分-靶点映射，转向更复杂的优先级决策与
+   全产业链质控。
+
+5）合成生物学保护与生产稀缺药用资源：用合成生物学/生物合成工程拯救濒危药用兰科植物[50]，
+   预示"资源可持续 + 活性成分异源生产"将成增长点。
+
+此外，铁死亡作为可成药轴在多病种反复出现（脑缺血再灌注[93]、APAP 肝损伤[673]），
+是一个值得持续跟踪的汇聚性机制热点。
+
+================================================================
+三、季度环比对比（2026年第一季度 → 2026年第二季度）
+================================================================
+
+环比基线：2026Q1 报告（20260323noreferences-1.docx）。Q1 的主线是"系统生物学范式系统化"——
+网络药理学+多组学成为主流机制语言；亮点集中在细胞死亡机制（金银花抑铁死亡、左归丸调铜死亡、
+荆防颗粒 Keap1-Nrf2-GPX4）、菌群-代谢-宿主轴（肠-脑/肠-心、胞外囊泡）、高等级循证
+（通心络胶囊干预冠脉斑块 STTT、电针改善胃癌化疗生活质量 JNCI、槐杞黄颗粒治儿童 ITP、
+针灸降低帕金森意外损伤的全国队列）、AI 与传感（EMFNet 舌体分割、SHAP+近红外药材溯源、
+fNIRS+眼动针灸决策）、以及智能递送（适配体脂质体、载脱水淫羊藿素外泌体）。
+
+【1. 本季度新出现的方向（Q1 没有的质变）】
+- 证候的"分子级"客观化：Q1 的客观化止步于舌诊/脉诊等单一体征，并自陈"与证候理论融合尚浅"；
+  Q2 直接用血浆细胞外囊泡 DNA 的 5hmC 表观遗传特征刻画"气阴两虚证"[97]，
+  把客观化从"体征"跃迁到"分子标志物"，是本季度最具范式意义的新信号。
+- 人源化评价平台：Q1 机制研究以动物/细胞模型 + 组学 + 网络药理学为主；
+  Q2 出现人源 iPSC 肝类器官[673]、转基因荧光斑马鱼[112]作为药效/毒性评价新基座。
+- 中药"定量"安全科学：Q1 的安全研究多为机制描述（如何首乌特异质肝损伤 TNF-α 协同）；
+  Q2 升级为可预测框架——PBPK 反向剂量学[55]、斑马鱼高通量心脏/发育毒理[54]。
+
+【2. 显著强化的方向（延续并加强）】
+- 高等级临床证据：Q1 已有 STTT/JNCI 级 RCT；Q2 进一步登上 JAMA Neurology[375]、
+  eClinicalMedicine[324]，且终点从"症状/生活质量"推向"结构性/疾病修饰"，证据门槛明显抬高。
+- 肠道菌群枢纽：Q1 是亮点；Q2 不仅延续，还从机制扩展到更多病种（HFpEF[38]、
+  黄芩汤治结肠炎[669]、双氢青蒿素治 IBD[659]、人参肠-脑轴[205]）并开始向临床 Meta 延伸[330]。
+- 铁死亡：Q1（金银花、醒明助散）→ Q2（脑缺血再灌注[93]、APAP 肝损伤[673]），持续高热。
+- AI：从 Q1 的体征客观化/溯源，升级为 Q2 的图学习成分优先级排序[96]与全产业链智慧农业[64]。
+
+【3. 明显消退/降温的方向】
+- 智能递送系统：Q1 的核心亮点之一（适配体脂质体、外泌体载药），在 Q2 的高价值信号中明显退居
+  次要，更多回落为材料/制剂类常规研究，未再构成"亮点级"突破。
+- 单纯舌诊/脉诊体征客观化：被"分子级证候客观化"覆盖，作为独立亮点的存在感下降。
+
+【4. 总体判断】
+本季度相较 Q1，"新颖性密度"上升。Q1 的增量主要是网络药理学+多组学对既有治则的"机制再诠释"
+（高产但同质），而 Q2 出现了两处质变型新信号——"证候分子客观化"与"人源模型平台"，
+且临床证据的发表平台与终点层级同步抬升。换言之，本季度更接近"范式苗头"而非"存量复制"。
+
+================================================================
+四、未来方向预测
+================================================================
+
+综合本季度的早期信号，预测未来 1–3 年中医药领域最可能兴起的方向：
+
+1）"可测量的证候"（最高潜力，尚处萌芽）：继 [97] 之后，预计会出现更多以表观遗传、
+   细胞外囊泡、多组学刻画证候并与疗效预测挂钩的研究。其崛起路径可类比网络药理学
+   （2000）从边缘概念到主流工具的过程——一旦标准化、可重复，将重塑辨证论治的科学叙事。
+
+2）人源类器官/器官芯片成为中药药效-毒性评价"新金标准"：随着 [673][112] 等积累，
+   纯网络药理学（本季度仍 106 篇）的边际价值将进一步下降，评价体系向人源生理模型迁移。
+
+3）以肠道菌群为枢纽的中药机制与"精准配伍"：菌群作为跨病种统一解释变量[38][659][669]，
+   将催生"以菌群应答为生物标志物"的人群分层与个体化用药研究。
+
+4）针灸研究从"对症"转向"改变疾病进程"的硬终点：[324] 已开始用结构性终点举证，
+   预计影像/生物标志物驱动的疾病修饰性针灸 RCT 会增多，证据门槛整体抬高。
+
+5）定量、可预测的中药安全性科学：PBPK 反向剂量学[55] + 斑马鱼高通量毒理[54]
+   将推动"毒性阈值-机制-人群暴露"一体化的定量安全评估，逐步取代经验性毒性描述。
+
+================================================================
+五、常规机制研究概览（仅作背景，不展开）
+================================================================
+
+本季度约 106 篇属于常规机制研究（网络药理学、分子对接、分子动力学模拟等，
+约占全部文献的 14%）。此类研究数量庞大但同质化高、增量信息有限，
+故本报告刻意不展开，仅作背景计量。建议在选题与资源配置上，
+将其作为"假设生成"工具，并尽量与人源模型验证、临床证据衔接，避免止步于硅基推断。
+
+================================================================
+六、参考文献（共 25 篇）
+================================================================
+
+[38] Reconstitution of gut microbiota by medicinal plant isoflavones ameliorates heart failure with preserved ejection fraction. Lin JH 等. 2026. Pharmacological Research.
+[50] Synthetic biology as a game-changer for endangered medicinal orchids: biosynthesis, engineering and conservation. Qiu L 等. 2026. Natural Product Reports.
+[54] Acute developmental toxicity and cardiotoxicity of Physalis alkekengi L. fruit and calyx extracts based on zebrafish model. Zhou ZS 等. 2026. Journal of Ethnopharmacology.
+[55] Seneciphylline induces hepatotoxicity through mitochondrial apoptosis: mechanistic elucidation and in vitro-to-in vivo prediction via PBPK modeling-facilitated reverse dosimetry. Lu YS 等. 2026. Chemico-Biological Interactions.
+[64] Empowering Chinese medicinal agriculture through AI-driven technologies: A comprehensive review. Zhang TT 等. 2026. Artificial Intelligence in Agriculture.
+[93] Progress of Traditional Chinese Medicine in Targeting Ferroptosis to Combat Cerebral Ischemia-Reperfusion Injury. Li JH 等. 2026. American Journal of Chinese Medicine.
+[96] Metapath2vec and attention-driven heterogeneous graph learning for prioritizing TCM-derived small molecules in gastric cancer. Sheng NQ 等. 2026. Chinese Medicine.
+[97] Epigenetic precision diagnostics of TCM syndrome differentiation: a pilot study of atrial fibrillation with qi-yin deficiency syndrome based on 5hmC signatures in plasma EV-DNA. Fan SW 等. 2026. Chinese Medicine.
+[101] A progression risk assessment model for pulmonary ground-glass nodules based on TCM clinical symptoms combined with imaging. Maolan A 等. 2026. Journal of Integrative Medicine.
+[112] Illuminating the black box of traditional Chinese medicine: The pivotal role of transgenic fluorescent zebrafish. Yu HC 等. 2026. Journal of Ethnopharmacology.
+[171] Acupuncture for acute treatment of migraine without aura: A randomized clinical trial. Deng YZ 等. 2026. Headache.
+[205] Ginseng Bioactive Components as Gut-Brain Axis-Targeted Modulators. Liu SL 等. 2026. Nutrients.
+[253] Effect of Yiqi Fumai lyophilized injection on BNP levels in patients with acute decompensated ischemic heart failure: a multicenter, open-label, blinded-outcome RCT. Wang XL 等. 2026. Phytomedicine.
+[324] Electroacupuncture for knee osteoarthritis: a multicentre randomised controlled trial assessing symptomatic and structural outcomes. Hang MH 等. 2026. eClinicalMedicine.
+[330] Effects of Herbal and Natural Product Interventions on Gut Microbiota and Clinical Outcomes in Patients Receiving PPI-Containing Therapy: A Systematic Review and Meta-Analysis. Hwang JH 等. 2026. Nutrients.
+[375] Effect of Electroacupuncture on Postherpetic Neuralgia: A Randomized Clinical Trial. Chen L 等. 2026. JAMA Neurology.
+[387] Comparative efficacy and safety of Chinese patent medicines in coronary heart disease patients after PCI: A systematic review and network meta-analysis. Wang AL 等. 2026. Journal of Ethnopharmacology.
+[415] Comparative effects of non-pharmacological interventions on anxiety, depression and quality of life in individuals with substance use disorders: A systematic review and network meta-analysis. Luo HR 等. 2026. Journal of Affective Disorders.
+[469] Real-world applications of integrated traditional Chinese and Western medicine in patients with intermediate coronary lesions: a multicenter observational cohort study. Wang XY 等. 2026. Phytomedicine.
+[616] Efficacy and safety of auriculotherapy for insomnia disorder: A randomized controlled trial. Chen H 等. 2026. Journal of Integrative Medicine.
+[617] Efficacy of non-pharmacological therapies on depression, anxiety, and glycemic control in type 2 diabetes: A systematic review and network meta-analysis. Zheng MY 等. 2026. General Hospital Psychiatry.
+[659] Dihydroartemisinin facilitates intestinal mucosal healing in IBD by targeting 11βHSD-1 to reprogram macrophage metabolism. Du Xinke 等. 2026. Phytomedicine.
+[669] Restoring gut microbiota homeostasis to ameliorate colitis via Huangqin decoction. Pan Yehua 等. 2026. Phytomedicine.
+[673] Schisandrin B alleviates APAP-induced hepatocyte ferroptosis via the GPX4 axis: Insights from human iPSC-derived hepatic organoids and rat models. Tang Zhuqian 等. 2026. Phytomedicine.
+[675] Shexiang Baoxin pill in patients with stable coronary artery disease and reduced eGFR: Subgroup analysis of phase IV randomized trial (MUSKARDIA). Zhou Jingmin 等. 2026. Phytomedicine.
