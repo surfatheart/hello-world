@@ -26,10 +26,8 @@
 # !pip install -q openai pymupdf python-docx pandas matplotlib openpyxl tqdm
 
 # %% [markdown]
-# ## 1. 全局配置
-#
-# 请在此处修改：**API Key**、**政策文件夹路径**、**输出目录**。
-# 其余维度框架、省份清单、药物类型等可按需调整。
+# ## 1. 导入所有依赖库
+# 按惯例，全部 import 集中放在最上面这一格。
 
 # %%
 import os
@@ -40,24 +38,39 @@ import glob
 import hashlib
 from pathlib import Path
 
-# ====== 1.1 DeepSeek API 配置 ======
-# 建议用环境变量，避免把 key 写进文件；也可直接把 "sk-xxx" 填到下面引号里
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "sk-在此填入你的DeepSeek密钥")
+import fitz                       # PyMuPDF，解析 PDF
+from docx import Document         # 解析 DOCX
+import pandas as pd
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib import font_manager
+from tqdm import tqdm
+from openai import OpenAI         # DeepSeek 兼容 OpenAI SDK
+
+print("依赖库导入完成。")
+
+# %% [markdown]
+# ## 2. 全局配置（**只需要改这一格**）
+#
+# 把下面三处改成你自己的即可：DeepSeek 密钥、政策文件夹路径、输出目录。
+
+# %%
+# ====== ① DeepSeek 密钥（把 sk-xxx 换成你的）======
+DEEPSEEK_API_KEY = "sk-在此填入你的DeepSeek密钥"
 DEEPSEEK_BASE_URL = "https://api.deepseek.com"
-DEEPSEEK_MODEL = "deepseek-chat"   # 也可用 "deepseek-reasoner"（更慢更贵，推理更强）
+DEEPSEEK_MODEL = "deepseek-chat"          # 也可改成 "deepseek-reasoner"
 
-# ====== 1.2 输入 / 输出路径 ======
-# 师姐政策文件夹（D 盘）。Windows 路径用 r"..." 原始字符串，避免反斜杠转义问题。
-POLICY_DIR = r"D:\师姐政策文件夹"          # <<< 改成你的真实文件夹路径
-# 若上面的路径不存在，会自动回退到当前目录（方便先用单个样例 PDF 测试）
-if not os.path.isdir(POLICY_DIR):
-    POLICY_DIR = os.getcwd()
-    print(f"[提示] 指定的 POLICY_DIR 不存在，已回退到当前目录：{POLICY_DIR}")
+# ====== ② 政策文件夹路径（你的 D 盘师姐政策文件夹）======
+# Windows 路径前面加 r，例如 r"D:\师姐政策文件夹"
+POLICY_DIR = r"D:\师姐政策文件夹"
 
-OUTPUT_DIR = os.path.join(os.getcwd(), "政策分析输出")
+# ====== ③ 结果输出文件夹（会自动创建）======
+OUTPUT_DIR = r"D:\师姐政策文件夹\政策分析输出"
+
+# ---- 下面不用改 ----
 os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-CACHE_PATH = os.path.join(OUTPUT_DIR, "coding_cache_policy.json")  # 编码缓存
+CACHE_PATH = os.path.join(OUTPUT_DIR, "coding_cache_policy.json")  # 编码缓存文件
 print("政策文件夹:", POLICY_DIR)
 print("输出目录  :", OUTPUT_DIR)
 
@@ -138,12 +151,10 @@ REFERENCE_MATRIX = {
 }
 
 # %% [markdown]
-# ## 2. 文本抽取
+# ## 3. 文本抽取
 # 支持 PDF、DOCX、DOC（尽力）、TXT。自动识别省份归属。
 
 # %%
-import fitz  # PyMuPDF
-
 def extract_pdf(path):
     text = []
     with fitz.open(path) as doc:
@@ -152,7 +163,6 @@ def extract_pdf(path):
     return "\n".join(text)
 
 def extract_docx(path):
-    from docx import Document
     doc = Document(path)
     parts = [p.text for p in doc.paragraphs]
     # 表格文本也抽取
@@ -230,13 +240,12 @@ for n, d in documents.items():
     print(f"  - {n}  | 省份={d['province']} | 字数={d['n_chars']}")
 
 # %% [markdown]
-# ## 3. DeepSeek 编码（开放编码 + 选择性编码）
+# ## 4. DeepSeek 编码（开放编码 + 选择性编码）
 #
 # 对每份文件，按维度抽取编码要点，**每条要点必须附政策原文逐字引证**，并标注药物类型。
 # 长文本自动分块后合并。结果写入缓存，避免重复调用。
 
 # %%
-from openai import OpenAI
 client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url=DEEPSEEK_BASE_URL)
 
 def load_cache():
@@ -353,8 +362,7 @@ def code_document(doc_name, doc, cache, force=False):
     return merged
 
 # %%
-# ====== 3.1 执行编码（带缓存）======
-from tqdm import tqdm
+# ====== 4.1 执行编码（带缓存）======
 cache = load_cache()
 for name, doc in tqdm(documents.items(), desc="编码文件"):
     if name in cache:
@@ -367,12 +375,10 @@ for name, doc in tqdm(documents.items(), desc="编码文件"):
 print("\n编码完成。已缓存到:", CACHE_PATH)
 
 # %% [markdown]
-# ## 4. 质性编码汇总表
+# ## 5. 质性编码汇总表
 # 生成长表（文件 × 维度 × 编码 × 原文 × 药物类型 × 省份），并导出 Excel。
 
 # %%
-import pandas as pd
-
 rows = []
 for name, doc in documents.items():
     coded = cache.get(name)
@@ -406,7 +412,7 @@ coding_df.to_excel(coding_xlsx, index=False)
 print("已导出:", coding_xlsx)
 
 # %% [markdown]
-# ## 5. 主题分析（跨文件聚类提炼主题）
+# ## 6. 主题分析（跨文件聚类提炼主题）
 #
 # 将每个维度下、所有文件的编码要点汇总后交给 DeepSeek 进行**轴心编码/主题提炼**，
 # 归纳为若干核心主题，并标注覆盖省份、支持文件数与代表性引文。
@@ -447,7 +453,7 @@ with open(os.path.join(OUTPUT_DIR, "主题分析结果.json"), "w", encoding="ut
 print("主题分析完成。")
 
 # %%
-# ====== 5.1 主题分析表 ======
+# ====== 6.1 主题分析表 ======
 theme_rows = []
 for d in DIMENSIONS:
     for t in theme_results.get(d, {}).get("主题", []) or []:
@@ -466,11 +472,11 @@ print("已导出:", theme_xlsx)
 theme_df
 
 # %% [markdown]
-# ## 6. 比较矩阵
+# ## 7. 比较矩阵
 # （1）省份 × 维度 编码数量矩阵；（2）化学药/生物制品 vs 中医药 对照表（含参考列）。
 
 # %%
-# ====== 6.1 省份 × 维度 编码数量矩阵 ======
+# ====== 7.1 省份 × 维度 编码数量矩阵 ======
 prov_dim = (coding_df[coding_df["维度"].isin(DIMENSIONS)]
             .pivot_table(index="省份", columns="维度", values="编码要点",
                          aggfunc="count", fill_value=0))
@@ -482,7 +488,7 @@ print("已导出:", matrix_xlsx)
 prov_dim
 
 # %%
-# ====== 6.2 化学药/生物制品 vs 中医药 对照表 ======
+# ====== 7.2 化学药/生物制品 vs 中医药 对照表 ======
 def summarize_codes(dim, drug_type, max_items=6):
     sub = coding_df[(coding_df["维度"] == dim) & (coding_df["药物类型"] == drug_type)]
     pts = list(dict.fromkeys(sub["编码要点"].tolist()))  # 去重保序
@@ -505,14 +511,10 @@ print("已导出:", compare_xlsx)
 compare_df
 
 # %% [markdown]
-# ## 7. 可视化
+# ## 8. 可视化
 # 中文字体：脚本会尝试常见中文字体；若图中中文显示为方框，请安装并指定 SimHei/Microsoft YaHei。
 
 # %%
-import matplotlib
-import matplotlib.pyplot as plt
-from matplotlib import font_manager
-
 # 中文字体自适应
 def set_chinese_font():
     candidates = ["Microsoft YaHei", "SimHei", "PingFang SC", "Heiti SC",
@@ -575,7 +577,6 @@ for col in DRUG_TYPES:
         pivot_drug[col] = 0
 pivot_drug = pivot_drug[DRUG_TYPES]
 fig, ax = plt.subplots(figsize=(11, 5))
-import numpy as np
 x = np.arange(len(pivot_drug.index)); w = 0.27
 colors = {"化学药与生物制品": "#C44E52", "中医药": "#55A868", "通用": "#8172B3"}
 for k, col in enumerate(DRUG_TYPES):
@@ -604,13 +605,13 @@ if not theme_df.empty:
 print("图表已保存到:", FIG_DIR)
 
 # %% [markdown]
-# ## 8. 生成约 8000 字研究报告
+# ## 9. 生成约 8000 字研究报告
 #
 # 仅向模型提供**已抽取的真实编码、主题与矩阵**作为证据，分章节生成以保证篇幅与质量。
 # 强制要求：凡证据不足处标注“现有政策文本未涉及”，引用观点须标注来源文件/省份，禁止杜撰。
 
 # %%
-# ====== 8.1 构建“证据包”（提供给模型的唯一事实来源）======
+# ====== 9.1 构建“证据包”（提供给模型的唯一事实来源）======
 def build_evidence_pack():
     lines = []
     lines.append("【一、纳入文本清单】")
@@ -705,7 +706,7 @@ print(f"\n报告已生成：{report_path}")
 print(f"中文字数（汉字计）约：{approx_words}")
 
 # %% [markdown]
-# ## 9. 汇总产出清单
+# ## 10. 汇总产出清单
 # 运行结束后，所有结果都在 `政策分析输出/` 目录下。
 
 # %%
