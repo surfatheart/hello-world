@@ -1,9 +1,8 @@
 # 创新医药政策质性分析与主题分析（DeepSeek API）
-# 用法1：在 Jupyter 新建一个代码单元格，把本文件全部内容粘进去，运行即可。
-# 用法2：命令行执行  python 创新医药政策分析.py
-# 运行前：①下方 pip 安装依赖（首次）②在“全局配置”处填密钥与文件夹路径。
+# 用法1：Jupyter 新建代码单元格，粘贴全部内容运行。
+# 用法2：命令行  python 创新医药政策分析.py
+# 运行前：①pip安装依赖 ②全局配置填密钥与路径。
 
-# ===== 首次运行请先安装依赖（去掉行首#执行一次）=====
 # pip install openai pymupdf python-docx pandas matplotlib openpyxl tqdm
 
 import os
@@ -587,63 +586,104 @@ print("已导出工具类型交叉表")
 tool_by_dim
 
 # ====================================================================
-# ## 7. 主题分析（跨文件聚类提炼主题）
+# ## 7. 归纳式主题分析（跨维度）+ 两种方法的整合
 #
-# 将每个维度下、所有文件的编码要点汇总后交给 DeepSeek 进行**轴心编码/主题提炼**，
-# 归纳为若干核心主题，并标注覆盖省份、支持文件数与代表性引文。
+# **方法定位（避免与第3节维度比较重复）**：
+# - 第 3 节的“质性分析”是**框架式定向内容分析**（演绎）：沿 7 个先验维度做结构化描述与横向比较。
+# - 本节“主题分析”是 Braun & Clarke 的**反身性主题分析**（归纳）：把**全部维度的编码混合在一起**，
+#   提炼能够**横跨多个维度**的潜在主题（latent themes），捕捉张力与趋势——主题不再按维度切分，
+#   因此不会与第 3 节重复。
+# - 7.2 给出**整合（联合展示 joint display）**：主题 × 维度 的对应矩阵，做三角互证，体现两种方法的互补。
 # ====================================================================
 
+# ====== 7.1 跨维度归纳主题分析 ======
 THEME_SYSTEM = (
-    "你是质性研究主题分析专家，熟悉 Braun & Clarke 的反身性主题分析。"
-    "你只能基于给定的编码条目进行归纳聚类，不得引入外部信息或编造省份/政策。"
+    "你是质性研究主题分析专家，精通 Braun & Clarke 的反身性主题分析（reflexive thematic analysis）。"
+    "你要在所有编码之上做归纳式提炼，生成能够横跨多个政策维度的潜在主题（latent theme），"
+    "而不是简单复述给定的维度名称。只能基于给定编码归纳，不得引入外部信息或编造省份/政策。"
 )
 
-def build_theme_prompt(dimension, items):
-    payload = [{"文件": it["文件"], "省份": it["省份"], "编码": it["编码要点"]} for it in items]
-    return f"""以下是“{dimension}”维度下、来自多份省级创新医药政策文本的全部编码要点（JSON 数组）。
-请进行主题分析：把语义相近的编码聚成若干（建议 3-6 个）**核心主题**。
+def build_theme_prompt(all_items):
+    # 去重并附带维度/省份/工具类型标签，供模型做跨维度归纳
+    seen, payload = set(), []
+    for it in all_items:
+        code = it["编码要点"].strip()
+        if not code or code in seen:
+            continue
+        seen.add(code)
+        payload.append({"编码": code, "维度": it["维度"], "省份": it["省份"], "工具": it.get("工具类型", "")})
+    return f"""下面是来自多份省级创新医药政策文本、覆盖全部评估维度的编码要点（JSON 数组，已含其所属维度标签）。
+请做**跨维度的归纳式主题分析**：在所有编码之上提炼 4-7 个**潜在核心主题**。
 
-要求：
-1. 每个主题给出：主题名称、主题阐释（1-3句）、覆盖省份列表、支持文件数、2-4条代表性编码原句（从输入中挑选，不得改写为不存在的内容）。
-2. 主题必须忠实于输入编码，禁止臆造。
-3. 严格输出 JSON：
-{{"主题": [{{"主题名称": "...", "主题阐释": "...", "覆盖省份": ["..."], "支持文件数": 0, "代表编码": ["..."]}}]}}
+关键要求：
+1. 主题应**横跨/整合多个维度**，揭示深层模式、张力或趋势，**不要**简单照搬“创新要素配置”等维度名作为主题。
+2. 每个主题给出：主题名称、主题阐释（2-4句，点明它如何贯穿不同维度）、涉及维度（可多个）、
+   覆盖省份、支持文件数、3-5 条代表性编码（须从输入中原样挑选，注明其维度）。
+3. 忠实于输入编码，禁止臆造。
+4. 严格输出 JSON：
+{{"主题": [{{"主题名称": "...", "主题阐释": "...", "涉及维度": ["..."], "覆盖省份": ["..."], "支持文件数": 0,
+            "代表编码": [{{"编码": "...", "维度": "..."}}]}}]}}
 
 【输入编码】
 {json.dumps(payload, ensure_ascii=False)}
 """
 
-theme_results = {}
-for d in DIMENSIONS:
-    items = [r for r in rows if r["维度"] == d]
-    if len(items) < 2:
-        theme_results[d] = {"主题": []}
-        continue
-    print(f">>> 主题分析：{d}（{len(items)} 条编码）")
-    theme_results[d] = call_deepseek_json(THEME_SYSTEM, build_theme_prompt(d, items))
+_all_dim_items = [r for r in rows if r["维度"] in DIMENSIONS]
+if len(_all_dim_items) >= 3:
+    theme_results = call_deepseek_json(THEME_SYSTEM, build_theme_prompt(_all_dim_items))
+else:
+    theme_results = {"主题": []}
 
-# 保存主题结果
 with open(os.path.join(OUTPUT_DIR, "主题分析结果.json"), "w", encoding="utf-8") as f:
     json.dump(theme_results, f, ensure_ascii=False, indent=2)
-print("主题分析完成。")
+print(f"跨维度主题分析完成，共提炼主题 {len(theme_results.get('主题', []))} 个。")
 
-# ====== 7.1 主题分析表 ======
+# 主题分析表
 theme_rows = []
-for d in DIMENSIONS:
-    for t in theme_results.get(d, {}).get("主题", []) or []:
-        theme_rows.append({
-            "维度": d,
-            "主题名称": t.get("主题名称", ""),
-            "主题阐释": t.get("主题阐释", ""),
-            "覆盖省份": "、".join(t.get("覆盖省份", []) or []),
-            "支持文件数": t.get("支持文件数", 0),
-            "代表编码": " || ".join(t.get("代表编码", []) or []),
-        })
+for t in theme_results.get("主题", []) or []:
+    reps = t.get("代表编码", []) or []
+    rep_str = " || ".join(r.get("编码", "") if isinstance(r, dict) else str(r) for r in reps)
+    theme_rows.append({
+        "主题名称": t.get("主题名称", ""),
+        "主题阐释": t.get("主题阐释", ""),
+        "涉及维度": "、".join(t.get("涉及维度", []) or []),
+        "覆盖省份": "、".join(t.get("覆盖省份", []) or []),
+        "支持文件数": t.get("支持文件数", 0),
+        "代表编码": rep_str,
+    })
 theme_df = pd.DataFrame(theme_rows)
 theme_xlsx = os.path.join(OUTPUT_DIR, "主题分析表.xlsx")
 theme_df.to_excel(theme_xlsx, index=False)
 print("已导出:", theme_xlsx)
 theme_df
+
+# ====== 7.2 整合分析：主题 × 维度 联合展示（joint display，三角互证）======
+# 每个主题在各维度上的“覆盖”：以模型给出的“涉及维度”为主，并用代表编码回链编码表做证据校验。
+def theme_dimension_vector(theme):
+    dims = set(theme.get("涉及维度", []) or [])
+    for rep in theme.get("代表编码", []) or []:
+        code = rep.get("编码", "") if isinstance(rep, dict) else str(rep)
+        d = rep.get("维度", "") if isinstance(rep, dict) else ""
+        if d in DIMENSIONS:
+            dims.add(d)
+        if code:
+            hit = coding_df[coding_df["编码要点"].apply(lambda x: bool(x) and (x in code or code in x))]
+            dims.update([x for x in hit["维度"].tolist() if x in DIMENSIONS])
+    return {d: (1 if d in dims else 0) for d in DIMENSIONS}
+
+joint_rows = []
+for t in theme_results.get("主题", []) or []:
+    vec = theme_dimension_vector(t)
+    row = {"主题": t.get("主题名称", "")}
+    row.update({d: vec[d] for d in DIMENSIONS})
+    row["跨越维度数"] = sum(vec.values())
+    joint_rows.append(row)
+joint_df = pd.DataFrame(joint_rows).set_index("主题") if joint_rows else pd.DataFrame(columns=["主题"] + DIMENSIONS).set_index("主题")
+joint_xlsx = os.path.join(OUTPUT_DIR, "表_整合联合展示_主题x维度.xlsx")
+joint_df.to_excel(joint_xlsx)
+print("已导出整合联合展示表:", joint_xlsx)
+print("说明：1=该主题贯穿此维度。‘跨越维度数’越大，说明该主题越是跨维度的整合性主题。")
+joint_df
 
 # ====================================================================
 # ## 8. 比较矩阵
@@ -758,17 +798,17 @@ plt.tight_layout()
 plt.savefig(os.path.join(FIG_DIR, "图3_化药生物制品_vs_中医药.png"), dpi=200)
 plt.show()
 
-# ====== 图4：主题频次条形图（按支持文件数）======
+# ====== 图4：核心主题支持强度（按支持文件数）======
 if not theme_df.empty:
     td = theme_df.copy()
-    td["标签"] = td["维度"] + " | " + td["主题名称"]
+    td["标签"] = td["主题名称"]
     td = td.sort_values("支持文件数", ascending=True).tail(15)
-    fig, ax = plt.subplots(figsize=(11, max(4, 0.45 * len(td) + 2)))
+    fig, ax = plt.subplots(figsize=(11, max(4, 0.5 * len(td) + 2)))
     ax.barh(td["标签"], td["支持文件数"], color="#DD8452")
     ax.set_xlabel("支持文件数")
-    ax.set_title("核心主题的支持强度（Top 主题）")
+    ax.set_title("跨维度核心主题的支持强度")
     plt.tight_layout()
-    plt.savefig(os.path.join(FIG_DIR, "图4_主题频次.png"), dpi=200)
+    plt.savefig(os.path.join(FIG_DIR, "图4_主题支持强度.png"), dpi=200)
     plt.show()
 
 # ====== 图5：政策工具类型分布（表2）======
@@ -797,6 +837,22 @@ plt.xticks(rotation=25, ha="right"); plt.tight_layout()
 plt.savefig(os.path.join(FIG_DIR, "图6_工具类型x维度.png"), dpi=200)
 plt.show()
 
+# ====== 图7：整合联合展示——主题 × 维度 热力图（体现两种方法的整合）======
+if not joint_df.empty:
+    jm = joint_df[DIMENSIONS]
+    fig, ax = plt.subplots(figsize=(11, max(4, 0.6 * len(jm) + 2)))
+    im = ax.imshow(jm.values, cmap="Greens", aspect="auto", vmin=0, vmax=1)
+    ax.set_xticks(range(len(DIMENSIONS))); ax.set_xticklabels(DIMENSIONS, rotation=30, ha="right")
+    ax.set_yticks(range(len(jm.index))); ax.set_yticklabels(jm.index)
+    for i in range(jm.shape[0]):
+        for j in range(jm.shape[1]):
+            if jm.values[i, j]:
+                ax.text(j, i, "✓", ha="center", va="center", fontsize=11, color="#114411")
+    ax.set_title("整合联合展示：归纳主题如何贯穿先验维度（✓=该主题覆盖此维度）")
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIG_DIR, "图7_整合联合展示.png"), dpi=200)
+    plt.show()
+
 print("图表已保存到:", FIG_DIR)
 
 # ====================================================================
@@ -824,11 +880,14 @@ def build_evidence_pack():
             q = (r["原文引证"] or "")[:120]
             lines.append(f"  - [{r['省份']}|{r['药物类型']}] {r['编码要点']}（原文：{q}）")
 
-    lines.append("\n【四、主题分析结果】")
-    for d in DIMENSIONS:
-        for t in theme_results.get(d, {}).get("主题", []) or []:
-            lines.append(f"  - [{d}] 主题：{t.get('主题名称','')}；省份：{'、'.join(t.get('覆盖省份',[]))}；"
-                         f"支持文件数：{t.get('支持文件数',0)}；阐释：{t.get('主题阐释','')}")
+    lines.append("\n【四、归纳式跨维度主题分析结果（解释层，独立于第3节的维度描述）】")
+    for t in theme_results.get("主题", []) or []:
+        lines.append(f"  - 主题：{t.get('主题名称','')}；涉及维度：{'、'.join(t.get('涉及维度',[]) or [])}；"
+                     f"省份：{'、'.join(t.get('覆盖省份',[]) or [])}；支持文件数：{t.get('支持文件数',0)}；"
+                     f"阐释：{t.get('主题阐释','')}")
+    if not joint_df.empty:
+        lines.append("\n【四附、整合联合展示：主题 × 维度（1=该主题贯穿此维度，体现两方法互补）】")
+        lines.append(joint_df.to_string())
 
     lines.append("\n【五、化学药/生物制品 vs 中医药 实证对照（来自编码）】")
     for _, r in compare_df.iterrows():
@@ -859,17 +918,34 @@ REPORT_SYSTEM = (
     "严禁编造政策条款、数字、省份或文件。语言客观、学术、有逻辑层次。"
 )
 
-# 8000 字分章节，给出各章目标字数
+# 分章节生成（整合式混合方法设计：框架式质性分析 + 归纳式主题分析 + 整合）
 REPORT_SECTIONS = [
-    ("摘要与关键词", "撰写中文摘要（目的/方法/主要发现/意义，约400字）和5个关键词。", 450),
-    ("一、引言", "问题提出、研究背景（可用省份产业画像作背景）、研究意义与研究问题。", 1000),
-    ("二、研究方法", "说明质性分析（开放编码+选择性编码）与反身性主题分析相结合的设计、DeepSeek辅助编码流程、文本来源与遴选、编码框架（7个预设维度+数据驱动新增维度）、政策工具类型分类框架（命令性/激励性/能力建设/权威重组/劝告性五类）、防杜撰与效度保障（逐字引证、缓存可复现）。", 1150),
-    ("三、各评估维度的横向比较", "依次分析创新要素配置、创新方向、临床前研究、临床研究、成果转化、资金支持、政策支持7个维度；每个维度对比省份差异，并对照化学药/生物制品与中医药两条路径。务必引用证据包中的具体编码与省份。", 2300),
-    ("四、主题分析发现", "呈现主题分析提炼出的核心主题及其跨省分布与政策意涵。", 1000),
-    ("五、政策工具类型结构与趋势", "基于证据包【七】的表2数据，分析五类政策工具的数量与占比结构；结合‘工具×维度’‘工具×省份’交叉，揭示当前政策工具偏好与结构性趋势（例如以激励性/能力建设工具为主、命令性/权威重组工具偏少等，须以实际数字为准），并讨论这种工具结构反映的治理逻辑与潜在不足。所有数字必须来自证据包，不得编造。", 1150),
-    ("六、省域格局与化药/中医药路径差异讨论", "讨论区域格局、化学药生物制品与中医药政策逻辑差异及其成因。", 950),
-    ("七、政策建议与研究局限", "基于发现提出可操作的政策建议（含对政策工具结构优化的建议）；说明研究局限（样本范围、文本时效、编码与分类主观性等）与展望。", 950),
+    ("摘要与关键词", "撰写中文摘要（研究目的/方法/主要发现/价值，约400字）与5个关键词。点明采用‘框架式质性分析+归纳式主题分析’的整合设计。", 450),
+    ("一、引言", "问题提出、研究背景（可用省份产业画像作背景）、研究意义与研究问题。", 900),
+    ("二、研究方法", "阐明整合式混合方法设计：①框架式定向内容分析（演绎，沿7个先验维度+政策工具类型做结构化编码与横向比较）；②Braun&Clarke反身性主题分析（归纳，跨维度提炼潜在主题）；③两者如何整合（联合展示joint display、三角互证、互补而非重复）。说明DeepSeek辅助编码流程、文本遴选、防杜撰与效度保障（逐字引证、缓存可复现）。", 1250),
+    ("三、框架式质性分析：评估维度的横向比较", "这是‘结构性/描述性’发现层。依次分析7个维度（创新要素配置、创新方向、临床前研究、临床研究、成果转化、资金支持、政策支持），每个维度做省份差异比较，并对照化学药/生物制品与中医药两条路径。多引用证据包中的具体编码与省份、给出频次。本章只做结构化描述，不做跨维度归纳。", 2100),
+    ("四、归纳式主题分析：跨维度核心主题", "这是‘解释性’发现层，必须与第三章区分开。呈现归纳出的4-7个**跨维度潜在主题**（来自证据包【四】），重点阐述每个主题如何横跨多个维度、揭示了何种深层模式或张力，**不要按维度复述、不要重复第三章**。", 1100),
+    ("五、两种方法的整合：联合展示与三角互证", "基于证据包【四附】的‘主题×维度’联合展示矩阵，说明归纳主题与先验维度如何对应整合：哪些主题跨越多个维度（整合性强）、两种方法在何处相互印证（三角互证收敛）、在何处各有侧重（互补）。讨论这种整合设计对结论稳健性的意义。", 950),
+    ("六、政策工具类型结构与趋势", "基于证据包【七】表2数据，分析五类政策工具的数量与占比结构，结合‘工具×维度/省份’交叉揭示工具偏好与结构性趋势（须以实际数字为准），讨论其治理逻辑与不足。", 1000),
+    ("七、省域格局与化药/中医药路径差异讨论", "讨论区域格局、化学药生物制品与中医药政策逻辑差异及其成因。", 900),
+    ("八、政策建议与研究局限", "提出可操作的政策建议（含政策工具结构优化）；说明研究局限（样本范围、文本时效、编码与分类主观性、单一模型偏差等）与展望。", 900),
 ]
+
+# 每章末尾内嵌的图表（标题关键词 -> [(图片文件, 图注)]）
+FIGURE_MAP = {
+    "三、框架式质性分析": [("图1_省份维度热力图.png", "图1 各省份在不同评估维度上的政策编码数量分布"),
+                    ("图2_维度编码总数.png", "图2 各评估维度的政策编码总数"),
+                    ("图3_化药生物制品_vs_中医药.png", "图3 化学药与生物制品 vs 中医药：各维度政策着力点对比")],
+    "四、归纳式主题分析": [("图4_主题支持强度.png", "图4 跨维度核心主题的支持强度")],
+    "五、两种方法的整合": [("图7_整合联合展示.png", "图7 整合联合展示：归纳主题如何贯穿先验维度")],
+    "六、政策工具类型": [("图5_政策工具类型分布.png", "图5 政策工具类型分布"),
+                  ("图6_工具类型x维度.png", "图6 各评估维度下的政策工具类型构成")],
+}
+def figures_for(title):
+    for k, v in FIGURE_MAP.items():
+        if title.startswith(k):
+            return v
+    return []
 
 def generate_section(title, instruction, target_words, prev_titles):
     user = f"""【证据包】
@@ -890,12 +966,18 @@ def generate_section(title, instruction, target_words, prev_titles):
     )
     return resp.choices[0].message.content
 
-report_parts = ["# 我国省域创新医药政策的质性与主题分析研究\n"]
+section_texts = {}   # 章节标题 -> 生成的正文（供 Word 导出复用，避免与图片混在一起）
+report_parts = ["# 我国省域创新医药政策研究——框架式质性分析与归纳式主题分析的整合\n"]
 prev = []
 for title, instruction, tgt in REPORT_SECTIONS:
     print(f">>> 生成章节：{title}（目标约{tgt}字）")
     sec = generate_section(title, instruction, tgt, "；".join(prev))
+    section_texts[title] = sec
     report_parts.append(sec)
+    # 在该章正文后内嵌对应的图（Markdown 图片引用，相对路径指向“图/”目录）
+    for fig_file, caption in figures_for(title):
+        if os.path.exists(os.path.join(FIG_DIR, fig_file)):
+            report_parts.append(f"\n![{caption}](图/{fig_file})\n\n*{caption}*\n")
     prev.append(title)
     time.sleep(1)
 
@@ -903,10 +985,67 @@ report_md = "\n\n".join(report_parts)
 report_path = os.path.join(OUTPUT_DIR, "创新医药政策研究报告.md")
 with open(report_path, "w", encoding="utf-8") as f:
     f.write(report_md)
-
 approx_words = len(re.findall(r"[\u4e00-\u9fff]", report_md))
-print(f"\n报告已生成：{report_path}")
+print(f"\nMarkdown 报告已生成（图表已内嵌）：{report_path}")
 print(f"中文字数（汉字计）约：{approx_words}")
+
+# ====== 10.3 导出内嵌图表的 Word 报告（.docx，适合投稿核心期刊）======
+from docx.shared import Inches, Pt
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+def _add_markdown_block(doc, text):
+    """把一段 Markdown 文本粗略转为 Word：# 标题转标题样式，图片行跳过，其余为正文段落。"""
+    for line in (text or "").splitlines():
+        s = line.rstrip()
+        if not s.strip() or s.lstrip().startswith("!["):
+            continue
+        m = re.match(r"^(#{1,4})\s+(.*)$", s.strip())
+        if m:
+            doc.add_heading(re.sub(r"[*#`]", "", m.group(2)).strip(), level=min(len(m.group(1)), 4))
+        else:
+            doc.add_paragraph(re.sub(r"[*`]", "", s).replace("|", " "))
+
+def _add_df_table(doc, df, caption, max_rows=40):
+    doc.add_heading(caption, level=3)
+    show = (df.reset_index() if df.index.name else df.copy()).head(max_rows)
+    t = doc.add_table(rows=1, cols=len(show.columns))
+    try:
+        t.style = "Light Grid Accent 1"
+    except Exception:
+        pass
+    for j, c in enumerate(show.columns):
+        t.rows[0].cells[j].text = str(c)
+    for _, r in show.iterrows():
+        cells = t.add_row().cells
+        for j, c in enumerate(show.columns):
+            cells[j].text = str(r[c])[:120]
+
+doc = Document()
+doc.add_heading("我国省域创新医药政策研究", level=0)
+sub = doc.add_paragraph("——框架式质性分析与归纳式主题分析的整合（基于政策文本）")
+sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+for title, _, _ in REPORT_SECTIONS:
+    _add_markdown_block(doc, section_texts.get(title, ""))
+    for fig_file, caption in figures_for(title):
+        fp = os.path.join(FIG_DIR, fig_file)
+        if os.path.exists(fp):
+            doc.add_picture(fp, width=Inches(6.0))
+            cap = doc.add_paragraph(caption); cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            for run in cap.runs:
+                run.font.size = Pt(9)
+
+doc.add_heading("附表", level=1)
+_add_df_table(doc, tool_table, "表2 政策工具类型分布")
+_add_df_table(doc, compare_df, "表 化学药与生物制品 vs 中医药 维度对照")
+if not theme_df.empty:
+    _add_df_table(doc, theme_df, "表 跨维度核心主题一览")
+if not joint_df.empty:
+    _add_df_table(doc, joint_df.reset_index(), "表 整合联合展示（主题×维度，1=贯穿）")
+
+docx_path = os.path.join(OUTPUT_DIR, "创新医药政策研究报告.docx")
+doc.save(docx_path)
+print("Word 报告已生成（图表内嵌）：", docx_path)
 
 # ====================================================================
 # ## 11. 汇总产出清单
@@ -923,9 +1062,11 @@ print("\n说明：")
 print("  · 附录A_质性编码汇总表.xlsx —— 逐条编码 + 原文引证 + 政策工具类型（防杜撰证据）")
 print("  · 表2_政策工具类型分布.xlsx —— 五类政策工具数量与占比")
 print("  · 表2附_工具类型交叉表.xlsx —— 工具类型×省份/维度/药物类型")
-print("  · 主题分析表.xlsx / 主题分析结果.json —— 主题分析产出")
+print("  · 主题分析表.xlsx / 主题分析结果.json —— 跨维度归纳主题产出")
+print("  · 表_整合联合展示_主题x维度.xlsx —— 两种方法整合（联合展示/三角互证）")
 print("  · 省份_维度_编码矩阵.xlsx —— 比较矩阵")
 print("  · 化学药生物制品_vs_中医药_对照表.xlsx —— 双路径对照")
-print("  · 图/*.png —— 可视化图表（含图5政策工具分布、图6工具×维度）")
-print("  · 创新医药政策研究报告.md —— 约8000字研究报告（含政策工具趋势章节）")
+print("  · 图/*.png —— 图1~图7（含图7整合联合展示热力图）")
+print("  · 创新医药政策研究报告.md —— 研究报告（图表已内嵌）")
+print("  · 创新医药政策研究报告.docx —— Word版研究报告（图表+附表内嵌，适合投稿）")
 print("  · coding_cache_policy.json / tool_cache.json —— 编码与工具分类缓存（重复运行直接复用）")
