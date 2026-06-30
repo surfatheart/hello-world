@@ -457,13 +457,168 @@ coding_df = pd.DataFrame(rows)
 print("编码总条数:", len(coding_df))
 coding_df.head(20)
 
+# %% [markdown]
+# ## 6. 政策工具类型分析（表2：命令性/激励性/能力建设/权威重组/劝告性）
+#
+# 在质性编码之外，新增一个分析维度：依据政策工具理论，把**每一条政策编码**归入五类工具之一，
+# 统计各类政策的数量与占比，并通过“工具×维度/省份/药物类型”交叉，观察政策工具的结构性趋势。
+# DeepSeek 逐条归类（判定依据须来自文本，防杜撰）；无法调用 API 时自动回退到关键词法。
+
 # %%
+# ====== 6.1 五类政策工具定义（依据“表2”）======
+POLICY_TOOLS = {
+    "命令性工具": {
+        "标准": "通过法律法规、强制性规定明确政策要求和标准",
+        "关键词": ["条例", "实施细则", "管理办法", "规定", "办法", "规章", "强制", "必须", "禁止", "不得", "依法"],
+    },
+    "激励性工具": {
+        "标准": "提供资金支持、奖励措施或惩罚机制来鼓励或约束行为",
+        "关键词": ["资金", "奖励", "奖补", "补贴", "补助", "资助", "专项资金", "基金", "税收", "贷款", "惩罚", "处罚"],
+    },
+    "能力建设工具": {
+        "标准": "通过项目规划、资源配置、机构建设等提升整体执行能力",
+        "关键词": ["规划", "发展", "方案", "建设", "创新体系", "平台", "人才", "培训", "示范", "基地", "资源配置"],
+    },
+    "权威重组工具": {
+        "标准": "通过制度改革、权力重新分配等调整体制、机制结构",
+        "关键词": ["体制机制改革", "改革", "权力再分配", "职能", "机构调整", "简政放权", "下放", "重组", "统筹协调"],
+    },
+    "劝告性工具": {
+        "标准": "倡导价值观、传递政策信息、指导行为（非强制）",
+        "关键词": ["意见", "倡导", "指导", "引导", "鼓励", "推动", "支持", "建议", "提倡"],
+    },
+}
+TOOL_TYPES = list(POLICY_TOOLS.keys())
+
+# 关键词兜底分类器（API 不可用时使用）
+def classify_tool_by_keyword(doc_title, code, quote):
+    text = f"{doc_title} {code} {quote}"
+    scores = {t: sum(text.count(k) for k in info["关键词"]) for t, info in POLICY_TOOLS.items()}
+    best = max(scores, key=scores.get)
+    if scores[best] == 0:
+        return "劝告性工具", "（无明显特征，按意见/指导类默认归为劝告性）"
+    hit = [k for k in POLICY_TOOLS[best]["关键词"] if k in text]
+    return best, "命中关键词：" + "、".join(hit[:5])
+
+# %%
+# ====== 6.2 用 DeepSeek 批量归类（带缓存；失败自动回退关键词法）======
+TOOL_CACHE_PATH = os.path.join(OUTPUT_DIR, "tool_cache.json")
+
+def load_tool_cache():
+    if os.path.exists(TOOL_CACHE_PATH):
+        with open(TOOL_CACHE_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+def save_tool_cache(c):
+    with open(TOOL_CACHE_PATH, "w", encoding="utf-8") as f:
+        json.dump(c, f, ensure_ascii=False, indent=2)
+
+TOOL_SYSTEM = (
+    "你是政策工具分析专家，依据政策工具理论，对政策条目按给定的五类标准进行单一归类。"
+    "只依据条目文本判断，判定依据必须来自文本本身，绝不臆造。"
+)
+
+def build_tool_prompt(batch):
+    rubric = "\n".join(f"- {t}：{v['标准']}；典型关键词：{'、'.join(v['关键词'])}" for t, v in POLICY_TOOLS.items())
+    payload = [{"id": i, "标题": it["文件"], "编码": it["编码要点"], "原文": (it["原文引证"] or "")[:120]}
+               for i, it in batch]
+    return f"""请把下列政策条目各归入**唯一一种**政策工具类型（五选一）。
+
+【五类政策工具及判定标准】
+{rubric}
+
+【要求】
+1. 每条只给一个最主要的工具类型，取值必须是上述五类之一。
+2. 判定依据：写明命中的关键词或内容特征（须来自该条目文本，不得编造）。
+3. 严格输出 JSON：{{"结果": [{{"id": 0, "工具类型": "...", "判定依据": "..."}}]}}
+
+【待分类条目】
+{json.dumps(payload, ensure_ascii=False)}
+"""
+
+def doc_title_of(name):
+    d = documents.get(name)
+    return get_doc_title(d["text"]) if d else (name or "")
+
+tool_cache = load_tool_cache()
+to_classify = []
+for i, r in coding_df.iterrows():
+    key = f"{r['文件']}||{r['维度']}||{r['编码要点']}"
+    if key not in tool_cache:
+        to_classify.append((i, {"文件": doc_title_of(r["文件"]),
+                                "编码要点": r["编码要点"], "原文引证": r["原文引证"]}))
+
+BATCH = 20
+for s in range(0, len(to_classify), BATCH):
+    batch = to_classify[s:s + BATCH]
+    idx_map = {i: (coding_df.loc[i, "文件"], coding_df.loc[i, "维度"], coding_df.loc[i, "编码要点"])
+               for i, _ in batch}
+    try:
+        res = call_deepseek_json(TOOL_SYSTEM, build_tool_prompt(batch))
+        got = {item.get("id"): item for item in res.get("结果", [])}
+    except Exception as e:
+        print(f"  [本批改用关键词法] {e}")
+        got = {}
+    for i, it in batch:
+        f, d, c = idx_map[i]
+        key = f"{f}||{d}||{c}"
+        if i in got and got[i].get("工具类型") in TOOL_TYPES:
+            tool_cache[key] = {"工具类型": got[i]["工具类型"], "判定依据": got[i].get("判定依据", "")}
+        else:
+            t, why = classify_tool_by_keyword(it["文件"], it["编码要点"], it["原文引证"])
+            tool_cache[key] = {"工具类型": t, "判定依据": why}
+    save_tool_cache(tool_cache)
+    print(f"  已分类 {min(s + BATCH, len(to_classify))}/{len(to_classify)}")
+
+# 把工具类型写回编码表
+def _tool(r, field):
+    return tool_cache.get(f"{r['文件']}||{r['维度']}||{r['编码要点']}", {}).get(field, "")
+coding_df["工具类型"] = coding_df.apply(lambda r: _tool(r, "工具类型"), axis=1)
+coding_df["工具判定依据"] = coding_df.apply(lambda r: _tool(r, "判定依据"), axis=1)
+
+# 重新导出附录A（现在含“工具类型”列）
 coding_xlsx = os.path.join(OUTPUT_DIR, "附录A_质性编码汇总表.xlsx")
 coding_df.to_excel(coding_xlsx, index=False)
-print("已导出:", coding_xlsx)
+print("已导出（含工具类型列）:", coding_xlsx)
+coding_df.head(10)
+
+# %%
+# ====== 6.3 表2：政策工具类型分布及占比 ======
+tool_counts = coding_df["工具类型"].value_counts().reindex(TOOL_TYPES, fill_value=0)
+tool_total = int(tool_counts.sum()) or 1
+tool_table = pd.DataFrame({
+    "工具类型": TOOL_TYPES,
+    "分类标准": [POLICY_TOOLS[t]["标准"] for t in TOOL_TYPES],
+    "政策条目数": [int(tool_counts[t]) for t in TOOL_TYPES],
+    "占比(%)": [round(tool_counts[t] / tool_total * 100, 1) for t in TOOL_TYPES],
+    "代表性编码": ["；".join(coding_df[coding_df["工具类型"] == t]["编码要点"].head(3).tolist()) for t in TOOL_TYPES],
+})
+tool_table_xlsx = os.path.join(OUTPUT_DIR, "表2_政策工具类型分布.xlsx")
+tool_table.to_excel(tool_table_xlsx, index=False)
+print("已导出:", tool_table_xlsx)
+tool_table
+
+# %%
+# ====== 6.4 工具类型 × 省份 / 维度 / 药物类型 交叉表 ======
+tool_by_prov = (coding_df.pivot_table(index="省份", columns="工具类型", values="编码要点",
+                                       aggfunc="count", fill_value=0)
+                .reindex(columns=TOOL_TYPES, fill_value=0))
+tool_by_dim = (coding_df[coding_df["维度"].isin(DIMENSIONS)]
+               .pivot_table(index="维度", columns="工具类型", values="编码要点", aggfunc="count", fill_value=0)
+               .reindex(index=DIMENSIONS, columns=TOOL_TYPES, fill_value=0))
+tool_by_drug = (coding_df.pivot_table(index="药物类型", columns="工具类型", values="编码要点",
+                                      aggfunc="count", fill_value=0)
+                .reindex(columns=TOOL_TYPES, fill_value=0))
+with pd.ExcelWriter(os.path.join(OUTPUT_DIR, "表2附_工具类型交叉表.xlsx")) as xw:
+    tool_by_prov.to_excel(xw, sheet_name="工具x省份")
+    tool_by_dim.to_excel(xw, sheet_name="工具x维度")
+    tool_by_drug.to_excel(xw, sheet_name="工具x药物类型")
+print("已导出工具类型交叉表")
+tool_by_dim
 
 # %% [markdown]
-# ## 6. 主题分析（跨文件聚类提炼主题）
+# ## 7. 主题分析（跨文件聚类提炼主题）
 #
 # 将每个维度下、所有文件的编码要点汇总后交给 DeepSeek 进行**轴心编码/主题提炼**，
 # 归纳为若干核心主题，并标注覆盖省份、支持文件数与代表性引文。
@@ -504,7 +659,7 @@ with open(os.path.join(OUTPUT_DIR, "主题分析结果.json"), "w", encoding="ut
 print("主题分析完成。")
 
 # %%
-# ====== 6.1 主题分析表 ======
+# ====== 7.1 主题分析表 ======
 theme_rows = []
 for d in DIMENSIONS:
     for t in theme_results.get(d, {}).get("主题", []) or []:
@@ -523,11 +678,11 @@ print("已导出:", theme_xlsx)
 theme_df
 
 # %% [markdown]
-# ## 7. 比较矩阵
+# ## 8. 比较矩阵
 # （1）省份 × 维度 编码数量矩阵；（2）化学药/生物制品 vs 中医药 对照表（含参考列）。
 
 # %%
-# ====== 7.1 省份 × 维度 编码数量矩阵 ======
+# ====== 8.1 省份 × 维度 编码数量矩阵 ======
 prov_dim = (coding_df[coding_df["维度"].isin(DIMENSIONS)]
             .pivot_table(index="省份", columns="维度", values="编码要点",
                          aggfunc="count", fill_value=0))
@@ -539,7 +694,7 @@ print("已导出:", matrix_xlsx)
 prov_dim
 
 # %%
-# ====== 7.2 化学药/生物制品 vs 中医药 对照表 ======
+# ====== 8.2 化学药/生物制品 vs 中医药 对照表 ======
 def summarize_codes(dim, drug_type, max_items=6):
     sub = coding_df[(coding_df["维度"] == dim) & (coding_df["药物类型"] == drug_type)]
     pts = list(dict.fromkeys(sub["编码要点"].tolist()))  # 去重保序
@@ -562,7 +717,7 @@ print("已导出:", compare_xlsx)
 compare_df
 
 # %% [markdown]
-# ## 8. 可视化
+# ## 9. 可视化
 # 中文字体：脚本会尝试常见中文字体；若图中中文显示为方框，请安装并指定 SimHei/Microsoft YaHei。
 
 # %%
@@ -653,16 +808,44 @@ if not theme_df.empty:
     plt.savefig(os.path.join(FIG_DIR, "图4_主题频次.png"), dpi=200)
     plt.show()
 
+# %%
+# ====== 图5：政策工具类型分布（表2）======
+fig, ax = plt.subplots(figsize=(9, 5))
+_vals = [int(tool_counts[t]) for t in TOOL_TYPES]
+_palette = ["#C44E52", "#DD8452", "#55A868", "#4C72B0", "#8172B3"]
+bars = ax.bar(TOOL_TYPES, _vals, color=_palette)
+ax.set_title("政策工具类型分布（表2）"); ax.set_ylabel("政策条目数")
+_tot = sum(_vals) or 1
+for b, v in zip(bars, _vals):
+    ax.text(b.get_x() + b.get_width() / 2, v, f"{v}\n{round(v/_tot*100,1)}%",
+            ha="center", va="bottom", fontsize=9)
+plt.xticks(rotation=20, ha="right"); plt.tight_layout()
+plt.savefig(os.path.join(FIG_DIR, "图5_政策工具类型分布.png"), dpi=200)
+plt.show()
+
+# %%
+# ====== 图6：工具类型 × 评估维度 构成（堆叠条形）======
+fig, ax = plt.subplots(figsize=(11, 6))
+bottom = np.zeros(len(tool_by_dim.index))
+for k, t in enumerate(TOOL_TYPES):
+    ax.bar(tool_by_dim.index, tool_by_dim[t].values, bottom=bottom, label=t, color=_palette[k % 5])
+    bottom += tool_by_dim[t].values
+ax.set_title("各评估维度下的政策工具类型构成"); ax.set_ylabel("政策条目数")
+ax.legend()
+plt.xticks(rotation=25, ha="right"); plt.tight_layout()
+plt.savefig(os.path.join(FIG_DIR, "图6_工具类型x维度.png"), dpi=200)
+plt.show()
+
 print("图表已保存到:", FIG_DIR)
 
 # %% [markdown]
-# ## 9. 生成约 8000 字研究报告
+# ## 10. 生成约 8000 字研究报告
 #
 # 仅向模型提供**已抽取的真实编码、主题与矩阵**作为证据，分章节生成以保证篇幅与质量。
 # 强制要求：凡证据不足处标注“现有政策文本未涉及”，引用观点须标注来源文件/省份，禁止杜撰。
 
 # %%
-# ====== 9.1 构建“证据包”（提供给模型的唯一事实来源）======
+# ====== 10.1 构建“证据包”（提供给模型的唯一事实来源）======
 def build_evidence_pack():
     lines = []
     lines.append("【一、纳入文本清单】")
@@ -694,6 +877,14 @@ def build_evidence_pack():
     lines.append("\n【六、省份产业画像（背景参考资料，非政策文本证据，引用须注明为背景）】")
     for p, prof in PROVINCE_PROFILE.items():
         lines.append(f"  - {p}：{prof}")
+
+    lines.append("\n【七、政策工具类型分布（表2；命令性/激励性/能力建设/权威重组/劝告性）】")
+    for t in TOOL_TYPES:
+        lines.append(f"  - {t}：{int(tool_counts[t])} 条，占 {round(tool_counts[t]/tool_total*100,1)}%")
+    lines.append("工具类型 × 评估维度 构成（行=维度，列=工具类型）：")
+    lines.append(tool_by_dim.to_string())
+    lines.append("工具类型 × 省份 构成：")
+    lines.append(tool_by_prov.to_string())
     return "\n".join(lines)
 
 EVIDENCE = build_evidence_pack()
@@ -712,11 +903,12 @@ REPORT_SYSTEM = (
 REPORT_SECTIONS = [
     ("摘要与关键词", "撰写中文摘要（目的/方法/主要发现/意义，约400字）和5个关键词。", 450),
     ("一、引言", "问题提出、研究背景（可用省份产业画像作背景）、研究意义与研究问题。", 1000),
-    ("二、研究方法", "说明质性分析（开放编码+选择性编码）与反身性主题分析相结合的设计、DeepSeek辅助编码流程、文本来源与遴选、编码框架（7个预设维度+数据驱动新增维度）、防杜撰与效度保障（逐字引证、缓存可复现）。", 1100),
-    ("三、各评估维度的横向比较", "依次分析创新要素配置、创新方向、临床前研究、临床研究、成果转化、资金支持、政策支持7个维度；每个维度对比省份差异，并对照化学药/生物制品与中医药两条路径。务必引用证据包中的具体编码与省份。", 2400),
-    ("四、主题分析发现", "呈现主题分析提炼出的核心主题及其跨省分布与政策意涵。", 1100),
-    ("五、省域格局与化药/中医药路径差异讨论", "讨论区域格局、化学药生物制品与中医药政策逻辑差异及其成因。", 1000),
-    ("六、政策建议与研究局限", "基于发现提出可操作的政策建议；说明研究局限（样本范围、文本时效、编码主观性等）与展望。", 950),
+    ("二、研究方法", "说明质性分析（开放编码+选择性编码）与反身性主题分析相结合的设计、DeepSeek辅助编码流程、文本来源与遴选、编码框架（7个预设维度+数据驱动新增维度）、政策工具类型分类框架（命令性/激励性/能力建设/权威重组/劝告性五类）、防杜撰与效度保障（逐字引证、缓存可复现）。", 1150),
+    ("三、各评估维度的横向比较", "依次分析创新要素配置、创新方向、临床前研究、临床研究、成果转化、资金支持、政策支持7个维度；每个维度对比省份差异，并对照化学药/生物制品与中医药两条路径。务必引用证据包中的具体编码与省份。", 2300),
+    ("四、主题分析发现", "呈现主题分析提炼出的核心主题及其跨省分布与政策意涵。", 1000),
+    ("五、政策工具类型结构与趋势", "基于证据包【七】的表2数据，分析五类政策工具的数量与占比结构；结合‘工具×维度’‘工具×省份’交叉，揭示当前政策工具偏好与结构性趋势（例如以激励性/能力建设工具为主、命令性/权威重组工具偏少等，须以实际数字为准），并讨论这种工具结构反映的治理逻辑与潜在不足。所有数字必须来自证据包，不得编造。", 1150),
+    ("六、省域格局与化药/中医药路径差异讨论", "讨论区域格局、化学药生物制品与中医药政策逻辑差异及其成因。", 950),
+    ("七、政策建议与研究局限", "基于发现提出可操作的政策建议（含对政策工具结构优化的建议）；说明研究局限（样本范围、文本时效、编码与分类主观性等）与展望。", 950),
 ]
 
 def generate_section(title, instruction, target_words, prev_titles):
@@ -757,7 +949,7 @@ print(f"\n报告已生成：{report_path}")
 print(f"中文字数（汉字计）约：{approx_words}")
 
 # %% [markdown]
-# ## 10. 汇总产出清单
+# ## 11. 汇总产出清单
 # 运行结束后，所有结果都在 `政策分析输出/` 目录下。
 
 # %%
@@ -768,10 +960,12 @@ for f in sorted(glob.glob(os.path.join(OUTPUT_DIR, "**", "*"), recursive=True)):
     if os.path.isfile(f):
         print("  -", os.path.relpath(f, OUTPUT_DIR))
 print("\n说明：")
-print("  · 附录A_质性编码汇总表.xlsx —— 逐条编码 + 原文引证（防杜撰证据）")
+print("  · 附录A_质性编码汇总表.xlsx —— 逐条编码 + 原文引证 + 政策工具类型（防杜撰证据）")
+print("  · 表2_政策工具类型分布.xlsx —— 五类政策工具数量与占比")
+print("  · 表2附_工具类型交叉表.xlsx —— 工具类型×省份/维度/药物类型")
 print("  · 主题分析表.xlsx / 主题分析结果.json —— 主题分析产出")
 print("  · 省份_维度_编码矩阵.xlsx —— 比较矩阵")
 print("  · 化学药生物制品_vs_中医药_对照表.xlsx —— 双路径对照")
-print("  · 图/*.png —— 可视化图表")
-print("  · 创新医药政策研究报告.md —— 约8000字研究报告")
-print("  · coding_cache_policy.json —— 编码缓存（重复运行直接复用）")
+print("  · 图/*.png —— 可视化图表（含图5政策工具分布、图6工具×维度）")
+print("  · 创新医药政策研究报告.md —— 约8000字研究报告（含政策工具趋势章节）")
+print("  · coding_cache_policy.json / tool_cache.json —— 编码与工具分类缓存（重复运行直接复用）")
